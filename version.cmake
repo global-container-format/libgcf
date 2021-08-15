@@ -1,0 +1,5 @@
+include_guard()
+
+set(GCF_VERSION_MAJOR 2)
+set(GCF_VERSION_MINOR 0)
+set(GCF_VERSION_PATCH 0)

@@ -1,0 +1,149 @@
+cmake_minimum_required(VERSION 3.20)
+
+include(version.cmake)
+include(features.cmake)
+include(functions.cmake)
+
+if("${CMAKE_BUILD_TYPE}" STREQUAL "")
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+set(GCF_ENABLE_COVERAGE ${GCF_FEATURE_COVERAGE})
+
+enable_testing()
+
+project(
+    GCF
+    VERSION ${GCF_VERSION_MAJOR}.${GCF_VERSION_MINOR}.${GCF_VERSION_PATCH}
+    DESCRIPTION "Graphics Container Format"
+    HOMEPAGE_URL https://github.com/moongoal/graphics-container-format
+)
+
+find_package(ZLIB REQUIRED)
+find_program(LLVM_PROFDATA_EXE llvm-profdata)
+find_program(LLVM_COV_EXE llvm-cov)
+
+if(
+    (
+        ${LLVM_PROFDATA_EXE} STREQUAL LLVM_PROFDATA_EXE-NOTFOUND
+        OR ${LLVM_COV_EXE} STREQUAL LLVM_COV_EXE-NOTFOUND
+    )
+    AND ${GCF_ENABLE_COVERAGE}
+)
+    message(WARNING "Coverage tools not found - no coverage will be available.")
+    set(GCF_ENABLE_COVERAGE OFF)
+endif()
+
+# Source
+set(SRC_DIR ${PROJECT_SOURCE_DIR}/src)
+set(INCLUDE_DIR ${SRC_DIR}/include)
+set(BINARY_INCLUDE_DIR ${PROJECT_BINARY_DIR}/include)
+set(VERSION_HEADER_TEMPLATE ${INCLUDE_DIR}/gcf/version.h.in)
+set(VERSION_HEADER include/gcf/version.h)
+
+# Test
+set(TEST_DIR ${PROJECT_SOURCE_DIR}/test)
+set(TEST_UTILS_DIR ${TEST_DIR}/lib)
+set(TEST_INCLUDE_DIR ${TEST_DIR}/include)
+
+# Coverage
+set(COVERAGE_DIR ${PROJECT_BINARY_DIR}/coverage)
+set(COVERAGE_REPORT_RAW ${COVERAGE_DIR}/gcf.profdata)
+set(COVERAGE_REPORT_SUMMARY ${COVERAGE_DIR}/gcf-summary.txt)
+set(COVERAGE_REPORT_DETAIL ${COVERAGE_DIR}/gcf.txt)
+
+file(
+    GLOB_RECURSE GCF_SOURCES
+    LIST_DIRECTORIES false
+    ${SRC_DIR}/*.c
+)
+file(
+    GLOB GCF_TEST_SOURCES
+    LIST_DIRECTORIES false
+    RELATIVE ${PROJECT_SOURCE_DIR}
+    ${TEST_DIR}/*.c
+)
+file(
+    GLOB GCF_COLOR_MAP_TEST_SOURCES
+    LIST_DIRECTORIES false
+    RELATIVE ${PROJECT_SOURCE_DIR}
+    ${TEST_DIR}/color-map/*.c
+)
+file(
+    GLOB_RECURSE GCF_TEST_UTILS_SOURCES
+    LIST_DIRECTORIES false
+    RELATIVE ${PROJECT_SOURCE_DIR}
+    ${TEST_UTILS_DIR}/*.c
+)
+
+add_library(gcf STATIC ${GCF_SOURCES})
+target_include_directories(gcf PUBLIC ${INCLUDE_DIR} ${BINARY_INCLUDE_DIR})
+target_link_libraries(gcf PRIVATE ZLIB::ZLIB)
+
+if(${GCF_ENABLE_COVERAGE})
+    target_compile_options(
+        gcf
+        PRIVATE
+            --coverage
+            -fprofile-arcs
+            -ftest-coverage
+            -fcoverage-mapping
+            -fprofile-instr-generate
+    )
+endif()
+
+configure_file(
+    ${VERSION_HEADER_TEMPLATE}
+    ${VERSION_HEADER}
+    NEWLINE_STYLE LF
+)
+
+add_library(gcf_test_utils STATIC ${GCF_TEST_UTILS_SOURCES})
+target_link_libraries(gcf_test_utils PUBLIC gcf)
+target_include_directories(gcf_test_utils PUBLIC ${TEST_INCLUDE_DIR})
+target_compile_definitions(gcf_test_utils PRIVATE _CRT_SECURE_NO_WARNINGS)
+
+add_module_tests(core GCF_CORE_TESTS GCF_CORE_COVERAGE_FILES ${GCF_TEST_SOURCES})
+add_module_tests(color-map GCF_COLORMAP_TESTS GCF_COLORMAP_COVERAGE_FILES ${GCF_COLOR_MAP_TEST_SOURCES})
+
+list(APPEND GCF_TESTS ${GCF_CORE_TESTS} ${GCF_COLORMAP_TESTS})
+list(APPEND GCF_COVERAGE_FILES ${GCF_CORE_COVERAGE_FILES} ${GCF_COLORMAP_COVERAGE_FILES})
+
+if(GCF_ENABLE_COVERAGE)
+    add_custom_command(
+        OUTPUT ${GCF_COVERAGE_FILES}
+        COMMAND ${CMAKE_COMMAND} ARGS --build ${PROJECT_BINARY_DIR} --target test
+        COMMENT "Generating coverage data"
+    )
+
+    add_custom_command(
+        OUTPUT ${COVERAGE_REPORT_RAW}
+        COMMAND ${LLVM_PROFDATA_EXE} ARGS merge -sparse ${GCF_COVERAGE_FILES} -o ${COVERAGE_REPORT_RAW}
+        DEPENDS ${GCF_COVERAGE_FILES}
+        COMMENT "Merging coverage data"
+    )
+
+    foreach(source_file IN LISTS GCF_SOURCES)
+        cmake_path(RELATIVE_PATH source_file BASE_DIRECTORY ${PROJECT_BINARY_DIR})
+        set(COVERAGE_RELATIVE_SOURCES ${COVERAGE_RELATIVE_SOURCES} ${source_file})
+    endforeach()
+
+    add_custom_command(
+        OUTPUT ${COVERAGE_REPORT_SUMMARY}
+        COMMAND ${LLVM_COV_EXE} ARGS report --show-functions --instr-profile "${COVERAGE_REPORT_RAW}" $<TARGET_FILE:gcf> ${COVERAGE_RELATIVE_SOURCES} > "${COVERAGE_REPORT_SUMMARY}"
+        COMMAND ${LLVM_COV_EXE} ARGS show --instr-profile "${COVERAGE_REPORT_RAW}" $<TARGET_FILE:gcf> > "${COVERAGE_REPORT_DETAIL}"
+        DEPENDS ${COVERAGE_REPORT_RAW}
+        COMMENT "Generating coverage report"
+    )
+
+    add_custom_target(
+        coverage
+        DEPENDS ${COVERAGE_REPORT_SUMMARY}
+    )
+
+    set_target_properties(
+        coverage
+        PROPERTIES
+            ADDITIONAL_CLEAN_FILES ${COVERAGE_DIR}
+    )
+endif()
