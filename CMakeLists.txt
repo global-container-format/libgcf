@@ -21,6 +21,12 @@ project(
 )
 
 find_package(ZLIB REQUIRED)
+
+check_python_module(gcfconv REQUIRED)
+
+set(Python_FIND_VIRTUALENV FIRST)
+find_package(Python REQUIRED)
+
 find_program(LLVM_PROFDATA_EXE llvm-profdata)
 find_program(LLVM_COV_EXE llvm-cov)
 
@@ -111,6 +117,9 @@ add_library(gcf_test_utils STATIC ${GCF_TEST_UTILS_SOURCES})
 target_link_libraries(gcf_test_utils PUBLIC gcf)
 target_include_directories(gcf_test_utils PUBLIC ${TEST_INCLUDE_DIR})
 target_compile_definitions(gcf_test_utils PRIVATE _CRT_SECURE_NO_WARNINGS)
+
+# Create test resources
+include(test-resources.cmake)
 
 add_module_tests(core GCF_CORE_TESTS GCF_CORE_COVERAGE_FILES ${GCF_TEST_SOURCES})
 add_module_tests(color-map GCF_COLORMAP_TESTS GCF_COLORMAP_COVERAGE_FILES ${GCF_COLOR_MAP_TEST_SOURCES})

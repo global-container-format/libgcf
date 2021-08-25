@@ -11,6 +11,8 @@ function(add_module_tests module_name tests_var coverage_files_var)
         target_link_libraries(${test_name} PRIVATE gcf gcf_test_utils)
         target_compile_definitions(${test_name} PRIVATE _CRT_SECURE_NO_WARNINGS)
 
+        add_dependencies(${test_name} generate-test-resources)
+
         set_target_properties(
             ${test_name}
             PROPERTIES
@@ -43,4 +45,32 @@ function(add_module_tests module_name tests_var coverage_files_var)
 
     set(${tests_var} ${test_name_list} PARENT_SCOPE)
     set(${coverage_files_var} ${test_coverage_file_list} PARENT_SCOPE)
+endfunction()
+
+# Ensure a python module is available
+function(check_python_module module_name)
+    if(${ARGC} EQUAL 2)
+        if(${ARGV1} STREQUAL REQUIRED)
+            set(is_required TRUE)
+        else()
+            message(FATAL_ERROR "Invalid argument. Must be REQUIRED or not specified.")
+        endif()
+    endif()
+
+    execute_process(
+        COMMAND ${_Python_EXECUTABLE} -c "import ${module_name}"
+        RESULTS_VARIABLE module_is_available
+        OUTPUT_QUIET
+        ERROR_QUIET
+    )
+
+    if(${module_is_available} EQUAL 0)
+        set(${module_name}_FOUND ${module_name} PARENT_SCOPE)
+    else()
+        if(NOT is_required)
+            set(${module_name}_FOUND ${module_name}_NOT_FOUND PARENT_SCOPE)
+        else()
+            message(FATAL_ERROR "Required Python module \"${module_name}\" not found.")
+        endif()
+    endif()
 endfunction()
