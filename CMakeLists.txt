@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.20)
 include(version.cmake)
 include(features.cmake)
 include(functions.cmake)
+include(test-defs.cmake)
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
     set(CMAKE_BUILD_TYPE Debug)
@@ -45,6 +46,8 @@ set(VERSION_HEADER include/gcf/version.h)
 set(TEST_DIR ${PROJECT_SOURCE_DIR}/test)
 set(TEST_UTILS_DIR ${TEST_DIR}/lib)
 set(TEST_INCLUDE_DIR ${TEST_DIR}/include)
+set(TEST_DEFS_HEADER_TEMPLATE ${TEST_INCLUDE_DIR}/gcf/test-defs.h.in)
+set(TEST_DEFS_HEADER include/gcf/test-defs.h)
 
 # Coverage
 set(COVERAGE_DIR ${PROJECT_BINARY_DIR}/coverage)
@@ -95,6 +98,12 @@ endif()
 configure_file(
     ${VERSION_HEADER_TEMPLATE}
     ${VERSION_HEADER}
+    NEWLINE_STYLE LF
+)
+
+configure_file(
+    ${TEST_DEFS_HEADER_TEMPLATE}
+    ${TEST_DEFS_HEADER}
     NEWLINE_STYLE LF
 )
 

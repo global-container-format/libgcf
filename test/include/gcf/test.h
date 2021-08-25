@@ -3,13 +3,7 @@
 
 #include <stdlib.h>
 #include <gcf/gcf.h>
-
-#define GCF_TEST_RESOURCE_FOLDER "test-assets"
-#define GCF_TEST_RESOURCE_IMAGE_MIPMAPS GCF_TEST_RESOURCE_FOLDER "/image-mipmaps.gcf"
-#define GCF_TEST_RESOURCE_IMAGE_MIPMAPS_UNPADDED GCF_TEST_RESOURCE_FOLDER "/image-mipmaps-unpadded.gcf"
-#define GCF_TEST_RESOURCE_IMAGE_COMPRESSED_ZLIB GCF_TEST_RESOURCE_FOLDER "/image-compressed-zlib.gcf"
-#define GCF_TEST_RESOURCE_IMAGE_UNCOMPRESSED GCF_TEST_RESOURCE_FOLDER "/image-uncompressed.gcf"
-#define GCF_TEST_RESOURCE_IMAGE_COMPRESSED_TEST GCF_TEST_RESOURCE_FOLDER "/image-compressed-test.gcf"
+#include <gcf/test-defs.h>
 
 #define GCF_TEST_SUCCEED() exit(EXIT_SUCCESS)
 #define GCF_TEST_FAIL() exit(EXIT_FAILURE)
