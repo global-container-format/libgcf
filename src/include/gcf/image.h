@@ -19,25 +19,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-#ifndef GCF_COLOR_MAP_H
-#define GCF_COLOR_MAP_H
+#ifndef GCF_IMAGE_H
+#define GCF_IMAGE_H
 
 #include <stdint.h>
 #include <gcf/container.h>
 
 /**
- * Resource descriptor flags for color map resource type.
+ * Resource descriptor flags for image resource type.
  */
-typedef enum gcf_color_map_flag_bits {
+typedef enum gcf_image_flag_bits {
     GCF_COLOR_MAP_FLAG_IMAGE_BIT_IMAGE_1D = 0x0001,
     GCF_COLOR_MAP_FLAG_IMAGE_BIT_IMAGE_2D = 0x0003,
     GCF_COLOR_MAP_FLAG_IMAGE_BIT_IMAGE_3D = 0x0007
-} gcf_color_map_flag_bits;
+} gcf_image_flag_bits;
 
 /**
  * Descriptor for a single mip level.
  */
-typedef struct gcf_color_map_mip_level_descriptor {
+typedef struct gcf_image_mip_level_descriptor {
     /**
      * Size of the compressed data, in bytes.
      */
@@ -72,42 +72,42 @@ typedef struct gcf_color_map_mip_level_descriptor {
      * Reserved.
      */
     uint64_t rsvd2;
-} gcf_color_map_mip_level_descriptor;
+} gcf_image_mip_level_descriptor;
 
 /**
- * Read a color map mip level descriptor.
+ * Read an image mip level descriptor.
  *
  * @param ctx The context.
- * @param descriptor The color map resource descriptor.
+ * @param descriptor The image resource descriptor.
  * @param out_level_descriptor The output mip map level descriptor.
  *
  * @return `GCF_RESULT_SUCCESS` on success, `GCF_RESULT_READ_ERROR` on error.
  */
-GCFATTR gcf_result GCFAPI gcf_read_color_map_mip_level_descriptor(
+GCFATTR gcf_result GCFAPI gcf_read_image_mip_level_descriptor(
     gcf_read_ctx * const restrict ctx,
     gcf_resource_descriptor const * const restrict descriptor,
-    gcf_color_map_mip_level_descriptor * const out_level_descriptor
+    gcf_image_mip_level_descriptor * const out_level_descriptor
 );
 
 /**
- * Read a color map mip level.
+ * Read an image mip level.
  *
  * @param ctx The context.
  * @param res_descriptor The resource descriptor.
  * @param mip_descriptor The mip map level descriptor.
  * @param out_data The output mip map level data buffer. This must be
- *  at least `gcf_color_map_mip_level_descriptor::uncompressed_size` bytes long and
+ *  at least `gcf_image_mip_level_descriptor::uncompressed_size` bytes long and
  *  will contain the uncompressed mip map level data on success.
  *
  * @return `GCF_RESULT_SUCCESS` on success, `GCF_RESULT_READ_ERROR` if an error occurred during
  *  a read, `GCF_RESULT_MEMORY_ERROR` if an error occurred during memory allocation or
  *  `GCF_RESULT_DECOMPRESS_ERROR` if an error occurred during resource decompression.
  */
-GCFATTR gcf_result GCFAPI gcf_read_color_map_mip_level(
+GCFATTR gcf_result GCFAPI gcf_read_image_mip_level(
     gcf_read_ctx * const restrict ctx,
     gcf_resource_descriptor const * const restrict res_descriptor,
-    gcf_color_map_mip_level_descriptor const * const restrict mip_descriptor,
+    gcf_image_mip_level_descriptor const * const restrict mip_descriptor,
     void * const out_data
 );
 
-#endif /* !GCF_COLOR_MAP_H */
+#endif /* !GCF_IMAGE_H */

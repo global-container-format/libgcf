@@ -158,14 +158,14 @@ GCFATTR gcf_result GCFAPI gcf_read_resource_content(
     return GCF_RESULT_SUCCESS;
 }
 
-GCFATTR gcf_result GCFAPI gcf_read_color_map_mip_level_descriptor(
+GCFATTR gcf_result GCFAPI gcf_read_image_mip_level_descriptor(
     gcf_read_ctx * const restrict ctx,
     gcf_resource_descriptor const * const restrict descriptor,
-    gcf_color_map_mip_level_descriptor * const out_level_descriptor
+    gcf_image_mip_level_descriptor * const out_level_descriptor
 ) {
     return read_generic_data(
         ctx,
-        sizeof(gcf_color_map_mip_level_descriptor),
+        sizeof(gcf_image_mip_level_descriptor),
         out_level_descriptor
     );
 }
@@ -264,10 +264,10 @@ GCFATTR gcf_result GCFAPI gcf_decompress(
     }
 }
 
-GCFATTR gcf_result GCFAPI gcf_read_color_map_mip_level(
+GCFATTR gcf_result GCFAPI gcf_read_image_mip_level(
     gcf_read_ctx * const restrict ctx,
     gcf_resource_descriptor const * const restrict res_descriptor,
-    gcf_color_map_mip_level_descriptor const * const restrict mip_descriptor,
+    gcf_image_mip_level_descriptor const * const restrict mip_descriptor,
     void * const out_data
 ) {
     void * const compressed_data = memory_alloc(ctx, mip_descriptor->compressed_size);

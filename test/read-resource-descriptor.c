@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
         gcf_read_resource_descriptor(&ctx, &resource_descriptor)
     );
 
-    GCF_ASSERT(resource_descriptor.resource_type == GCF_RESOURCE_TYPE_COLOR_MAP);
+    GCF_ASSERT(resource_descriptor.resource_type == GCF_RESOURCE_TYPE_IMAGE);
     GCF_ASSERT(resource_descriptor.format == VK_FORMAT_R8G8B8A8_UINT);
     GCF_ASSERT(resource_descriptor.size == 131808);
     GCF_ASSERT(resource_descriptor.supercompression_scheme == GCF_SUPERCOMPRESSION_SCHEME_DEFLATE);

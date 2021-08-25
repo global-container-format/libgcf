@@ -4,8 +4,8 @@
 int main(int argc, char **argv) {
     gcf_read_ctx ctx;
     gcf_resource_descriptor resource_descriptor;
-    gcf_color_map_mip_level_descriptor cm_mip_level_descriptor;
-    gcf_test_init_read_context(&ctx, GCF_TEST_RESOURCE_IMAGE_MIPMAPS);
+    gcf_image_mip_level_descriptor cm_mip_level_descriptor;
+    gcf_test_init_read_context(&ctx, GCF_TEST_RESOURCE_IMAGE_COMPRESSED_ZLIB);
 
     GCF_ASSERT(ctx.header.resource_count >= 1);
 
@@ -14,13 +14,13 @@ int main(int argc, char **argv) {
     );
 
     GCF_ASSERT_RESULT(
-        gcf_read_color_map_mip_level_descriptor(&ctx, &resource_descriptor, &cm_mip_level_descriptor)
+        gcf_read_image_mip_level_descriptor(&ctx, &resource_descriptor, &cm_mip_level_descriptor)
     );
 
     void * const data = malloc(cm_mip_level_descriptor.uncompressed_size);
 
     GCF_ASSERT_RESULT(
-        gcf_read_color_map_mip_level(&ctx, &resource_descriptor, &cm_mip_level_descriptor, data)
+        gcf_read_image_mip_level(&ctx, &resource_descriptor, &cm_mip_level_descriptor, data)
     );
 
     free(data);

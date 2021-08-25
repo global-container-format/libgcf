@@ -23,6 +23,6 @@ SOFTWARE.
 #define GCF_H
 
 #include <gcf/container.h>
-#include <gcf/color-map.h>
+#include <gcf/image.h>
 
 #endif /* !GCF_H */

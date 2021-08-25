@@ -188,9 +188,9 @@ typedef enum gcf_resource_type {
     GCF_RESOURCE_TYPE_BLOB,
 
     /**
-     * A color map resource.
+     * An image resource.
      */
-    GCF_RESOURCE_TYPE_COLOR_MAP,
+    GCF_RESOURCE_TYPE_IMAGE,
 
     /**
      * First available user-private resource ID.
