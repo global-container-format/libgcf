@@ -46,3 +46,15 @@ cmake --build build --target coverage
 ```
 
 **NOTE**: The *coverage* target is only available when the corresponding feature is enabled in the `features.cmake` file.
+
+## Testing
+
+To run the tests, the following is required:
+
+1. A Python 3 installation (or active virtual environment).
+2. The *gcfconv* Python package installed.
+
+With the environment active, initialize the build by running `cmake -S . -B build -G Ninja` in the main project directory.
+If everything is configured correctly, no warnings will be shown.
+
+With this last step successful, you can run the build and then the tests.

@@ -9,8 +9,6 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "")
     set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-set(GCF_ENABLE_COVERAGE ${GCF_FEATURE_COVERAGE})
-
 enable_testing()
 
 project(
@@ -22,20 +20,31 @@ project(
 
 find_package(ZLIB REQUIRED)
 
-check_python_module(gcfconv REQUIRED)
-
 set(Python_FIND_VIRTUALENV FIRST)
-find_package(Python REQUIRED)
+find_package(Python)
 
 find_program(LLVM_PROFDATA_EXE llvm-profdata)
 find_program(LLVM_COV_EXE llvm-cov)
+
+if(Python_FOUND)
+    check_python_module(gcfconv)
+
+    if(Python_module_gcfconv_FOUND)
+        set(GCF_ENABLE_TESTS ON)
+        set(GCF_ENABLE_COVERAGE ${GCF_FEATURE_COVERAGE})
+    else()
+        message(WARNING "Python module \"gcfconv\" not found. Tests will not be available.")
+    endif()
+else()
+    message(WARNING "Python not found. Tests will not be available.")
+endif()
 
 if(
     (
         ${LLVM_PROFDATA_EXE} STREQUAL LLVM_PROFDATA_EXE-NOTFOUND
         OR ${LLVM_COV_EXE} STREQUAL LLVM_COV_EXE-NOTFOUND
     )
-    AND ${GCF_ENABLE_COVERAGE}
+    AND GCF_ENABLE_COVERAGE
 )
     message(WARNING "Coverage tools not found - no coverage will be available.")
     set(GCF_ENABLE_COVERAGE OFF)
@@ -89,7 +98,7 @@ add_library(gcf STATIC ${GCF_SOURCES})
 target_include_directories(gcf PUBLIC ${INCLUDE_DIR} ${BINARY_INCLUDE_DIR})
 target_link_libraries(gcf PRIVATE ZLIB::ZLIB)
 
-if(${GCF_ENABLE_COVERAGE})
+if(GCF_ENABLE_COVERAGE)
     target_compile_options(
         gcf
         PRIVATE
@@ -121,8 +130,10 @@ target_compile_definitions(gcf_test_utils PRIVATE _CRT_SECURE_NO_WARNINGS)
 # Create test resources
 include(test-resources.cmake)
 
-add_module_tests(core GCF_CORE_TESTS GCF_CORE_COVERAGE_FILES ${GCF_TEST_SOURCES})
-add_module_tests(color-map GCF_COLORMAP_TESTS GCF_COLORMAP_COVERAGE_FILES ${GCF_COLOR_MAP_TEST_SOURCES})
+if(GCF_ENABLE_TESTS)
+    add_module_tests(core GCF_CORE_TESTS GCF_CORE_COVERAGE_FILES ${GCF_TEST_SOURCES})
+    add_module_tests(image GCF_COLORMAP_TESTS GCF_COLORMAP_COVERAGE_FILES ${GCF_COLOR_MAP_TEST_SOURCES})
+endif()
 
 list(APPEND GCF_TESTS ${GCF_CORE_TESTS} ${GCF_COLORMAP_TESTS})
 list(APPEND GCF_COVERAGE_FILES ${GCF_CORE_COVERAGE_FILES} ${GCF_COLORMAP_COVERAGE_FILES})

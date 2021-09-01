@@ -49,6 +49,8 @@ endfunction()
 
 # Ensure a python module is available
 function(check_python_module module_name)
+    set(var_name Python_module_${module_name}_FOUND)
+
     if(${ARGC} EQUAL 2)
         if(${ARGV1} STREQUAL REQUIRED)
             set(is_required TRUE)
@@ -57,18 +59,30 @@ function(check_python_module module_name)
         endif()
     endif()
 
-    execute_process(
-        COMMAND ${_Python_EXECUTABLE} -c "import ${module_name}"
-        RESULTS_VARIABLE module_is_available
-        OUTPUT_QUIET
-        ERROR_QUIET
-    )
+    if(CACHE{${var_name}})
+        set(module_is_available $CACHE{${var_name}})
+    else()
+        execute_process(
+            COMMAND ${_Python_EXECUTABLE} -c "import ${module_name}"
+            RESULTS_VARIABLE module_is_available
+            OUTPUT_QUIET
+            ERROR_QUIET
+        )
 
-    if(${module_is_available} EQUAL 0)
-        set(${module_name}_FOUND ${module_name} PARENT_SCOPE)
+        if(NOT ${module_is_available} EQUAL 0)
+            set(module_is_available FALSE)
+        else()
+            set(module_is_available TRUE)
+        endif()
+
+        set(${var_name} ${module_is_available} CACHE BOOL "Module ${module_name} is available.")
+    endif()
+
+    if(${module_is_available} EQUAL TRUE)
+        set(${var_name} ${module_name} PARENT_SCOPE)
     else()
         if(NOT is_required)
-            set(${module_name}_FOUND ${module_name}_NOT_FOUND PARENT_SCOPE)
+            set(${var_name} ${module_name}_NOT_FOUND PARENT_SCOPE)
         else()
             message(FATAL_ERROR "Required Python module \"${module_name}\" not found.")
         endif()
