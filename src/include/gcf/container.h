@@ -111,18 +111,29 @@ typedef struct gcf_image_resource_descriptor {
     uint16_t flags;
 
     /**
-     * Reserved
+     * Reserved.
      */
-    uint64_t rsvd;
+    uint32_t rsvd1;
+
+    /**
+     * Reserved.
+     */
+    uint16_t rsvd2;
 } gcf_image_resource_descriptor;
 
 /**
  * Blob type-specific data.
  */
 typedef struct gcf_blob_resource_descriptor {
+    /**
+     * Uncompressed resource size.
+     */
     uint64_t uncompressed_size;
-    uint64_t rsvd1;
-    uint16_t rsvd2;
+
+    /**
+     * Reserved.
+     */
+    uint64_t rsvd;
 } gcf_blob_resource_descriptor;
 
 /**
@@ -170,6 +181,11 @@ typedef struct gcf_resource_descriptor {
      * @see gcf_supercompression_scheme
      */
     uint16_t supercompression_scheme;
+
+    /**
+     * Reserved.
+     */
+    uint16_t rsvd;
 
     /**
      * Type-specific descriptor data.

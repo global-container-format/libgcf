@@ -115,7 +115,7 @@ GCFATTR gcf_result GCFAPI gcf_read_resource_descriptor(
     gcf_read_ctx * const restrict ctx,
     gcf_resource_descriptor * const restrict out_descriptor
 ) {
-    if(ctx->current_resource_index == ctx->header.resource_count) {
+    if(ctx->current_resource_index >= ctx->header.resource_count) {
         return GCF_RESULT_END;
     }
 
