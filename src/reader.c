@@ -136,8 +136,10 @@ GCFATTR gcf_result GCFAPI gcf_read_resource_content(
     gcf_resource_descriptor const * const restrict descriptor,
     void * const restrict out_content
 ) {
+    const uint32_t read_data_size = read_data(ctx, out_content, descriptor->size);
+
     if(
-        read_data(ctx, out_content, descriptor->size) != descriptor->size
+        read_data_size != descriptor->size
     ) {
         return GCF_RESULT_READ_ERROR;
     }

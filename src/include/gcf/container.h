@@ -113,12 +113,12 @@ typedef struct gcf_image_resource_descriptor {
     /**
      * Reserved.
      */
-    uint32_t rsvd1;
+    uint16_t rsvd1;
 
     /**
      * Reserved.
      */
-    uint16_t rsvd2;
+    uint32_t rsvd2;
 } gcf_image_resource_descriptor;
 
 /**
