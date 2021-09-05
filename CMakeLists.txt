@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
+include(CMakePackageConfigHelpers)
 include(version.cmake)
 include(features.cmake)
 include(functions.cmake)
@@ -60,7 +61,7 @@ set(DEFS_HEADER_TEMPLATE ${INCLUDE_DIR}/gcf/defs.h.in)
 set(DEFS_HEADER include/gcf/defs.h)
 
 # Test
-set(TEST_DIR ${PROJECT_SOURCE_DIR}/test)
+set(TEST_DIR test)
 set(TEST_UTILS_DIR ${TEST_DIR}/lib)
 set(TEST_INCLUDE_DIR ${TEST_DIR}/include)
 set(TEST_DEFS_HEADER_TEMPLATE ${TEST_INCLUDE_DIR}/gcf/test-defs.h.in)
@@ -104,7 +105,11 @@ endif()
 
 add_library(gcf ${GCF_LIB_MODE} ${GCF_SOURCES})
 target_compile_definitions(gcf PRIVATE GCF_SOURCE)
-target_include_directories(gcf PUBLIC ${INCLUDE_DIR} ${BINARY_INCLUDE_DIR})
+target_include_directories(
+    gcf PUBLIC
+        $<BUILD_INTERFACE:${INCLUDE_DIR}>
+        $<BUILD_INTERFACE:${BINARY_INCLUDE_DIR}>
+)
 target_link_libraries(gcf PRIVATE ZLIB::ZLIB)
 
 if(GCF_ENABLE_COVERAGE)
@@ -191,3 +196,46 @@ if(GCF_ENABLE_COVERAGE)
             ADDITIONAL_CLEAN_FILES ${COVERAGE_DIR}
     )
 endif()
+
+set(GCF_CONFIG_INSTALL_DIR lib/cmake/${PROJECT_NAME}-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
+
+install(
+    TARGETS gcf
+        EXPORT gcf
+        RUNTIME
+        LIBRARY
+        PUBLIC_HEADER
+)
+
+install(
+    EXPORT gcf
+        DESTINATION ${GCF_CONFIG_INSTALL_DIR}
+        NAMESPACE GCF::
+        FILE ${PROJECT_NAME}-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.cmake
+)
+
+set(GCF_CONFIG_VERSION_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake)
+
+write_basic_package_version_file(
+    ${GCF_CONFIG_VERSION_FILE}
+    COMPATIBILITY SameMinorVersion
+)
+
+install(
+    FILES ${GCF_CONFIG_VERSION_FILE}
+    DESTINATION ${GCF_CONFIG_INSTALL_DIR}
+)
+
+install(
+    DIRECTORY ${INCLUDE_DIR}/
+    TYPE INCLUDE
+    FILES_MATCHING
+    PATTERN "*.h"
+)
+
+install(
+    DIRECTORY ${BINARY_INCLUDE_DIR}/
+    TYPE INCLUDE
+    FILES_MATCHING
+    PATTERN "*.h"
+)
