@@ -1,0 +1,6 @@
+#ifndef GCF_DEFS_H
+#define GCF_DEFS_H
+
+#cmakedefine GCF_BUILD_DLL
+
+#endif /* !GCF_DEFS_H */

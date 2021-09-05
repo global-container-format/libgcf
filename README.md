@@ -47,6 +47,10 @@ cmake --build build --target coverage
 
 **NOTE**: The *coverage* target is only available when the corresponding feature is enabled in the `features.cmake` file.
 
+### Building a shared library
+
+To build a shared library version of *libgcf*, define the boolean CMake variable `GCF_BUILD_DLL` and set it to `ON`.
+
 ## Testing
 
 To run the tests, the following is required:
@@ -58,3 +62,5 @@ With the environment active, initialize the build by running `cmake -S . -B buil
 If everything is configured correctly, no warnings will be shown.
 
 With this last step successful, you can run the build and then the tests.
+
+**NOTE**: To run the tests when building a shared library, be sure to let the executable tests know where to find the built libraries, for example by adding the build folder to the *path* environment variable.

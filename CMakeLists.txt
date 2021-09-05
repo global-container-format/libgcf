@@ -14,8 +14,8 @@ enable_testing()
 project(
     GCF
     VERSION ${GCF_VERSION_MAJOR}.${GCF_VERSION_MINOR}.${GCF_VERSION_PATCH}
-    DESCRIPTION "Graphics Container Format"
-    HOMEPAGE_URL https://github.com/moongoal/graphics-container-format
+    DESCRIPTION "Global Container Format"
+    HOMEPAGE_URL https://github.com/global-container-format/libgcf
 )
 
 find_package(ZLIB REQUIRED)
@@ -56,6 +56,8 @@ set(INCLUDE_DIR ${SRC_DIR}/include)
 set(BINARY_INCLUDE_DIR ${PROJECT_BINARY_DIR}/include)
 set(VERSION_HEADER_TEMPLATE ${INCLUDE_DIR}/gcf/version.h.in)
 set(VERSION_HEADER include/gcf/version.h)
+set(DEFS_HEADER_TEMPLATE ${INCLUDE_DIR}/gcf/defs.h.in)
+set(DEFS_HEADER include/gcf/defs.h)
 
 # Test
 set(TEST_DIR ${PROJECT_SOURCE_DIR}/test)
@@ -94,7 +96,14 @@ file(
     ${TEST_UTILS_DIR}/*.c
 )
 
-add_library(gcf STATIC ${GCF_SOURCES})
+if(GCF_BUILD_DLL)
+    set(GCF_LIB_MODE SHARED)
+else()
+    set(GCF_LIB_MODE STATIC)
+endif()
+
+add_library(gcf ${GCF_LIB_MODE} ${GCF_SOURCES})
+target_compile_definitions(gcf PRIVATE GCF_SOURCE)
 target_include_directories(gcf PUBLIC ${INCLUDE_DIR} ${BINARY_INCLUDE_DIR})
 target_link_libraries(gcf PRIVATE ZLIB::ZLIB)
 
@@ -113,6 +122,12 @@ endif()
 configure_file(
     ${VERSION_HEADER_TEMPLATE}
     ${VERSION_HEADER}
+    NEWLINE_STYLE LF
+)
+
+configure_file(
+    ${DEFS_HEADER_TEMPLATE}
+    ${DEFS_HEADER}
     NEWLINE_STYLE LF
 )
 
