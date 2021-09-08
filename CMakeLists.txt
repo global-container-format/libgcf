@@ -88,7 +88,7 @@ file(
     ${TEST_DIR}/*.c
 )
 file(
-    GLOB GCF_COLOR_MAP_TEST_SOURCES
+    GLOB GCF_IMAGE_TEST_SOURCES
     LIST_DIRECTORIES false
     RELATIVE ${PROJECT_SOURCE_DIR}
     ${TEST_DIR}/color-map/*.c
@@ -155,7 +155,7 @@ include(test-resources.cmake)
 
 if(GCF_ENABLE_TESTS)
     add_module_tests(core GCF_CORE_TESTS GCF_CORE_COVERAGE_FILES ${GCF_TEST_SOURCES})
-    add_module_tests(image GCF_COLORMAP_TESTS GCF_COLORMAP_COVERAGE_FILES ${GCF_COLOR_MAP_TEST_SOURCES})
+    add_module_tests(image GCF_COLORMAP_TESTS GCF_COLORMAP_COVERAGE_FILES ${GCF_IMAGE_TEST_SOURCES})
 endif()
 
 list(APPEND GCF_TESTS ${GCF_CORE_TESTS} ${GCF_COLORMAP_TESTS})
@@ -207,7 +207,7 @@ install(
         EXPORT gcf
         RUNTIME
         LIBRARY
-        PUBLIC_HEADER
+        INCLUDES DESTINATION include/
 )
 
 install(
@@ -230,14 +230,9 @@ install(
 )
 
 install(
-    DIRECTORY ${INCLUDE_DIR}/
-    TYPE INCLUDE
-    FILES_MATCHING
-    PATTERN "*.h"
-)
-
-install(
-    DIRECTORY ${BINARY_INCLUDE_DIR}/
+    DIRECTORY
+        ${INCLUDE_DIR}/
+        ${BINARY_INCLUDE_DIR}/
     TYPE INCLUDE
     FILES_MATCHING
     PATTERN "*.h"

@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
     GCF_ASSERT(resource_descriptor.type_data.image.depth == 1);
     GCF_ASSERT(resource_descriptor.type_data.image.layer_count == 1);
     GCF_ASSERT(resource_descriptor.type_data.image.mip_level_count == 5);
-    GCF_ASSERT(resource_descriptor.type_data.image.flags == GCF_COLOR_MAP_FLAG_IMAGE_BIT_IMAGE_2D);
+    GCF_ASSERT(resource_descriptor.type_data.image.flags == GCF_IMAGE_FLAG_BIT_2D);
     GCF_ASSERT(resource_descriptor.type_data.image.rsvd1 == 0);
     GCF_ASSERT(resource_descriptor.type_data.image.rsvd2 == 0);
 

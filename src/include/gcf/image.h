@@ -29,9 +29,9 @@ SOFTWARE.
  * Resource descriptor flags for image resource type.
  */
 typedef enum gcf_image_flag_bits {
-    GCF_COLOR_MAP_FLAG_IMAGE_BIT_IMAGE_1D = 0x0001,
-    GCF_COLOR_MAP_FLAG_IMAGE_BIT_IMAGE_2D = 0x0003,
-    GCF_COLOR_MAP_FLAG_IMAGE_BIT_IMAGE_3D = 0x0007
+    GCF_IMAGE_FLAG_BIT_1D = 0x0001,
+    GCF_IMAGE_FLAG_BIT_2D = 0x0003,
+    GCF_IMAGE_FLAG_BIT_3D = 0x0007
 } gcf_image_flag_bits;
 
 /**
