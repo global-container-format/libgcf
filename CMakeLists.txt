@@ -6,7 +6,10 @@ include(features.cmake)
 include(functions.cmake)
 include(test-defs.cmake)
 
-if("${CMAKE_BUILD_TYPE}" STREQUAL "")
+if(
+    (NOT DEFINED CMAKE_BUILD_TYPE)
+    OR ("${CMAKE_BUILD_TYPE}" STREQUAL "")
+)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
 
@@ -211,7 +214,7 @@ install(
     EXPORT gcf
         DESTINATION ${GCF_CONFIG_INSTALL_DIR}
         NAMESPACE GCF::
-        FILE ${PROJECT_NAME}-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.cmake
+        FILE ${PROJECT_NAME}-config.cmake
 )
 
 set(GCF_CONFIG_VERSION_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake)
