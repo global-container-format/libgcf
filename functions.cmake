@@ -59,17 +59,17 @@ function(check_python_module module_name)
         endif()
     endif()
 
-    if(CACHE{${var_name}})
+    if(DEFINED CACHE{${var_name}})
         set(module_is_available $CACHE{${var_name}})
     else()
         execute_process(
             COMMAND ${_Python_EXECUTABLE} -c "import ${module_name}"
-            RESULTS_VARIABLE module_is_available
+            RESULTS_VARIABLE lookup_command_result
             OUTPUT_QUIET
             ERROR_QUIET
         )
 
-        if(NOT ${module_is_available} EQUAL 0)
+        if(NOT ${lookup_command_result} EQUAL 0)
             set(module_is_available FALSE)
         else()
             set(module_is_available TRUE)
@@ -78,7 +78,7 @@ function(check_python_module module_name)
         set(${var_name} ${module_is_available} CACHE BOOL "Module ${module_name} is available.")
     endif()
 
-    if(${module_is_available} EQUAL TRUE)
+    if(module_is_available)
         set(${var_name} ${module_name} PARENT_SCOPE)
     else()
         if(NOT is_required)
