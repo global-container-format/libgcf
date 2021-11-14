@@ -23,8 +23,6 @@ project(
 )
 
 find_package(ZLIB REQUIRED)
-
-set(Python_FIND_VIRTUALENV FIRST)
 find_package(Python)
 
 find_program(LLVM_PROFDATA_EXE llvm-profdata)
