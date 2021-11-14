@@ -8,8 +8,8 @@ To build the library the following is required:
 * Build tools (ninja is preferred)
 * C compiler (preferred is clang)
 * Z-lib
-* Python (required to build test resources)
-* gcfconv (required to build test resources)
+* Python (optional, required to build test resources)
+* gcfconv (optional, required to build test resources)
 
 ## Preparing the build system
 
@@ -21,7 +21,11 @@ cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON
 
 This will initialize the build system and export the compile commands (if supported).
 
-To prepare the build for testing, you may want to ensure the proper features are enabled in *features.cmake*, then eventually initialise a virtual environment and install *gcfconv*. If a virtual environment is enabled, it must be activated. These steps must be taken **before** runnig the prepare build command above.
+To prepare the build for testing, you may want to ensure the proper features are enabled in *features.cmake*, then eventually initialise a virtual environment and install *gcfconv*. If a virtual environment is enabled, it must be activated. These steps must be taken **before** runnig the prepare build command above, like:
+
+```bash
+${GCFCONV_PATH}/venv/scripts/activate && cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON
+```
 
 ## Running the build
 
