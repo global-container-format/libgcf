@@ -71,5 +71,3 @@ With the environment active, initialize the build by running `cmake -S . -B buil
 If everything is configured correctly, no warnings will be shown.
 
 With this last step successful, you can run the build and then the tests.
-
-**NOTE**: To run the tests when building a shared library, be sure to let the executable tests know where to find the built libraries, for example by adding the build folder to the *path* environment variable.

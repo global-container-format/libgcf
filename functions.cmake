@@ -16,7 +16,7 @@ function(add_module_tests module_name tests_var coverage_files_var)
         set_target_properties(
             ${test_name}
             PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY tests/${module_name}
+            RUNTIME_OUTPUT_DIRECTORY test/${module_name}
             RUNTIME_OUTPUT_NAME ${test_src_name}
         )
 
@@ -24,6 +24,12 @@ function(add_module_tests module_name tests_var coverage_files_var)
             NAME ${test_name}
             COMMAND ${test_name}
             WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+        )
+
+        set_tests_properties(
+            ${test_name}
+            PROPERTIES
+                ENVIRONMENT_MODIFICATION PATH=path_list_append:${CMAKE_BINARY_DIR}
         )
 
         list(APPEND test_name_list ${test_name})

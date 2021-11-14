@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.22)
 
 include(CMakePackageConfigHelpers)
 include(version.cmake)
@@ -32,10 +32,10 @@ if(Python_FOUND)
     check_python_module(gcfconv)
 
     if(Python_module_gcfconv_FOUND)
-        set(GCF_ENABLE_TESTS ON CACHE BOOL "Enable tests")
+        set(GCF_ENABLE_TESTS ON)
         set(GCF_ENABLE_COVERAGE ${GCF_FEATURE_COVERAGE})
     else()
-        set(GCF_ENABLE_TESTS OFF CACHE BOOL "Enable tests")
+        set(GCF_ENABLE_TESTS OFF)
         message(WARNING "Python module \"gcfconv\" not found. Tests will not be available.")
     endif()
 else()
@@ -99,7 +99,7 @@ file(
     ${TEST_UTILS_DIR}/*.c
 )
 
-if(GCF_BUILD_DLL)
+if(GCF_FEATURE_DLL)
     set(GCF_LIB_MODE SHARED)
 else()
     set(GCF_LIB_MODE STATIC)
