@@ -8,7 +8,7 @@ function(add_module_tests module_name tests_var coverage_files_var)
         set(test_coverage_file ${COVERAGE_DIR}/${test_name}.profraw)
 
         add_executable(${test_name} ${test_src})
-        target_link_libraries(${test_name} PRIVATE gcf gcf_test_utils)
+        target_link_libraries(${test_name} PRIVATE gcf_test_utils gcf)
         target_compile_definitions(${test_name} PRIVATE _CRT_SECURE_NO_WARNINGS)
 
         add_dependencies(${test_name} generate-test-resources)
