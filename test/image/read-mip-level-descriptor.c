@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
         gcf_read_image_mip_level_descriptor(&ctx, &resource_descriptor, &cm_mip_level_descriptor)
     );
 
-    GCF_ASSERT(cm_mip_level_descriptor.compressed_size == 89782);
+    GCF_ASSERT(cm_mip_level_descriptor.compressed_size == 262144);
     GCF_ASSERT(cm_mip_level_descriptor.uncompressed_size == 262144);
     GCF_ASSERT(cm_mip_level_descriptor.row_stride == 1024);
     GCF_ASSERT(cm_mip_level_descriptor.depth_stride == 262144);
