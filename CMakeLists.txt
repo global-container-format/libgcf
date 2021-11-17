@@ -90,7 +90,7 @@ file(
     GLOB GCF_IMAGE_TEST_SOURCES
     LIST_DIRECTORIES false
     RELATIVE ${PROJECT_SOURCE_DIR}
-    ${TEST_DIR}/color-map/*.c
+    ${TEST_DIR}/image/*.c
 )
 file(
     GLOB_RECURSE GCF_TEST_UTILS_SOURCES
