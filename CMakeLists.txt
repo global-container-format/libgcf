@@ -101,6 +101,7 @@ file(
 
 if(GCF_FEATURE_DLL)
     set(GCF_LIB_MODE SHARED)
+    set(GCF_BUILD_DLL ON)
 else()
     set(GCF_LIB_MODE STATIC)
 endif()
