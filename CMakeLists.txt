@@ -22,6 +22,8 @@ project(
     HOMEPAGE_URL https://github.com/global-container-format/libgcf
 )
 
+set(Python_FIND_VIRTUALENV FIRST)
+
 find_package(ZLIB REQUIRED)
 find_package(Python)
 
