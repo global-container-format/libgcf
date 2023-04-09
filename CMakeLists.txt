@@ -112,6 +112,8 @@ target_include_directories(
     gcf PUBLIC
         $<BUILD_INTERFACE:${INCLUDE_DIR}>
         $<BUILD_INTERFACE:${BINARY_INCLUDE_DIR}>
+    PRIVATE
+        ${ZLIB_INCLUDE_DIRS}
 )
 target_link_libraries(gcf PRIVATE ZLIB::ZLIB)
 

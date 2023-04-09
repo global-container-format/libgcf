@@ -3,3 +3,6 @@
 build/
 install/
 venv/
+host/
+
+CMakeUserPresets.json
