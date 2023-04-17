@@ -80,7 +80,11 @@ set(COVERAGE_REPORT_DETAIL ${COVERAGE_DIR}/gcf.txt)
 file(
     GLOB_RECURSE GCF_SOURCES
     LIST_DIRECTORIES false
-    ${SRC_DIR}/*.c
+    ${SRC_DIR}/reader.c
+    ${SRC_DIR}/memory.c
+    ${SRC_DIR}/io.c
+    ${SRC_DIR}/image.c
+    ${SRC_DIR}/compress.c
 )
 file(
     GLOB GCF_TEST_SOURCES
