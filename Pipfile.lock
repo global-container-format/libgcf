@@ -1,12 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "82d4663c0b86be048fa6662ab0f652dbcd5cef0697d46f4f79cdbe176a3acf95"
+            "sha256": "a04bc58c536a7f1ed4d8bd7b8c9d8a772199d711f3eec829d911f2954d6915e3"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_full_version": "3.11.1",
-            "python_version": "3.11"
+            "python_version": "3"
         },
         "sources": [
             {
@@ -116,10 +115,10 @@
         },
         "conan": {
             "hashes": [
-                "sha256:508f97b04c72fe15510ae6c109e084f3755938addef2b84e853a79b36a1b21e3"
+                "sha256:9100f92171669d310e945da669ec108f6e1794fbc3e06f6a50b4e6902682b522"
             ],
             "index": "pypi",
-            "version": "==2.0.3"
+            "version": "==2.0.4"
         },
         "fasteners": {
             "hashes": [

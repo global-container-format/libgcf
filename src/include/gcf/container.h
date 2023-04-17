@@ -42,6 +42,15 @@ SOFTWARE.
  */
 #define GCF_MAGIC_VALUE GCF_MAGIC_PREFIX GCF_QUOTE(GCF_VERSION_MAJOR)
 
+/**
+ * Check whether a result is successful or not. Return from
+ * the current function with the result value if the result value
+ * is not successful.
+ *
+ * @param result The result expression to test.
+ */
+#define GCF_CHECK(result) do { gcf_result const _gcf_check_r = (result); if(_gcf_check_r != GCF_RESULT_SUCCESS) { return _gcf_check_r; } } while(0)
+
 typedef struct gcf_read_ctx gcf_read_ctx;
 
 /**

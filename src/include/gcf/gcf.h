@@ -24,5 +24,6 @@ SOFTWARE.
 
 #include <gcf/container.h>
 #include <gcf/image.h>
+#include <gcf/format.h>
 
 #endif /* !GCF_H */

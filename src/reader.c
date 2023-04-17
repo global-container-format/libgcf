@@ -15,26 +15,20 @@ static bool is_magic_valid(uint32_t const actual_magic) {
     return actual_magic == magic_value;
 }
 
-static uint32_t read_data(
-    gcf_read_ctx * const ctx,
-    void * const destination,
-    size_t const data_size
-) {
-    return ctx->read_clbk(destination, data_size, ctx->user_data);
-}
-
 static inline size_t align_size(size_t const orig_size, size_t const alignment) {
     size_t const mask = alignment - 1;
 
     return (orig_size + mask) & ~mask;
 }
 
-static inline gcf_result read_generic_data(
+static inline gcf_result read_data(
     gcf_read_ctx * const restrict ctx,
     uint32_t const data_size,
     void * const out_data
 ) {
-    if(read_data(ctx, out_data, data_size) != data_size) {
+    const uint32_t bytes_read = ctx->read_clbk(out_data, data_size, ctx->user_data);
+
+    if(bytes_read != data_size) {
         return GCF_RESULT_READ_ERROR;
     }
 
@@ -94,9 +88,7 @@ GCFATTR gcf_result GCFAPI gcf_read_context_initialize(
     ctx->decompress_clbk = decompress_clbk;
     ctx->user_data = user_data;
 
-    if(read_data(ctx, &ctx->header, sizeof(gcf_header)) != sizeof(gcf_header)) {
-        return GCF_RESULT_READ_ERROR;
-    }
+    GCF_CHECK(read_data(ctx, sizeof(gcf_header), &ctx->header));
 
     if(!is_magic_valid(ctx->header.magic)) {
         return GCF_RESULT_INVALID_MAGIC;
@@ -121,12 +113,7 @@ GCFATTR gcf_result GCFAPI gcf_read_resource_descriptor(
 
     ctx->current_resource_index++;
 
-    if(
-        read_data(ctx, out_descriptor, sizeof(gcf_resource_descriptor))
-        != sizeof(gcf_resource_descriptor)
-    ) {
-        return GCF_RESULT_READ_ERROR;
-    }
+    GCF_CHECK(read_data(ctx, sizeof(gcf_resource_descriptor), out_descriptor));
 
     return GCF_RESULT_SUCCESS;
 }
@@ -136,13 +123,7 @@ GCFATTR gcf_result GCFAPI gcf_read_resource_content(
     gcf_resource_descriptor const * const restrict descriptor,
     void * const restrict out_content
 ) {
-    const uint32_t read_data_size = read_data(ctx, out_content, descriptor->size);
-
-    if(
-        read_data_size != descriptor->size
-    ) {
-        return GCF_RESULT_READ_ERROR;
-    }
+    GCF_CHECK(read_data(ctx, descriptor->size, out_content));
 
     /*
      * Skip padding.
@@ -154,7 +135,7 @@ GCFATTR gcf_result GCFAPI gcf_read_resource_content(
         size_t const aligned_size = align_size(descriptor->size, sizeof(uint64_t));
         size_t const padding_size = aligned_size - descriptor->size;
 
-        read_data(ctx, NULL, padding_size);
+        read_data(ctx, padding_size, NULL);
     }
 
     return GCF_RESULT_SUCCESS;
@@ -165,7 +146,7 @@ GCFATTR gcf_result GCFAPI gcf_read_image_mip_level_descriptor(
     gcf_resource_descriptor const * const restrict descriptor,
     gcf_image_mip_level_descriptor * const out_level_descriptor
 ) {
-    return read_generic_data(
+    return read_data(
         ctx,
         sizeof(gcf_image_mip_level_descriptor),
         out_level_descriptor
@@ -276,7 +257,7 @@ GCFATTR gcf_result GCFAPI gcf_read_image_mip_level(
     gcf_result result = GCF_RESULT_MEMORY_ERROR;
 
     if(compressed_data) {
-        result = read_generic_data(ctx, mip_descriptor->compressed_size, compressed_data);
+        result = read_data(ctx, mip_descriptor->compressed_size, compressed_data);
 
         if(result == GCF_RESULT_SUCCESS) {
             result = ctx->decompress_clbk(

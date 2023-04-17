@@ -16,7 +16,7 @@ To build the library the following is required:
 To prepare the build, run:
 
 ```bash
-cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON
+cmake --preset conan-debug -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON
 ```
 
 This will initialize the build system and export the compile commands (if supported).
@@ -24,7 +24,7 @@ This will initialize the build system and export the compile commands (if suppor
 To prepare the build for testing, you may want to ensure the proper features are enabled in *features.cmake*, then eventually initialise a virtual environment and install *gcfconv*. If a virtual environment is enabled, it must be activated. These steps must be taken **before** runnig the prepare build command above, like:
 
 ```bash
-${GCFCONV_PATH}/venv/scripts/activate && cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON
+cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON
 ```
 
 ## Running the build
