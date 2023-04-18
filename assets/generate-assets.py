@@ -62,13 +62,10 @@ def create_folders():
 def write_image_asset_file(file_name: str, image: Image.Image):
     full_path = path.join(BUILD_ASSET_DIR, file_name)
 
-    if not path.exists(full_path):
-        print(f"Writing image asset data {full_path}...")
+    print(f"Writing image asset data {full_path}...")
 
-        with open(full_path, "wb") as f:
-            f.write(image.tobytes())
-    else:
-        print(f"Skipping existing data file {full_path}.")
+    with open(full_path, "wb") as f:
+        f.write(image.tobytes())
 
 
 def main():

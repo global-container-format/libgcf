@@ -1,8 +1,5 @@
 #include <gcf/test.h>
-
-#ifndef VK_FORMAT_R8G8B8A8_UINT
-    #define VK_FORMAT_R8G8B8A8_UINT 41
-#endif /* VK_FORMAT_R8G8B8A8_UINT */
+#include <gcf/format.h>
 
 int main(int argc, char **argv) {
     gcf_read_ctx ctx;
@@ -16,7 +13,7 @@ int main(int argc, char **argv) {
     );
 
     GCF_ASSERT(resource_descriptor.resource_type == GCF_RESOURCE_TYPE_IMAGE);
-    GCF_ASSERT(resource_descriptor.format == VK_FORMAT_R8G8B8A8_UINT);
+    GCF_ASSERT(resource_descriptor.format == GCF_FORMAT_R8G8B8A8_UINT);
     GCF_ASSERT(resource_descriptor.size == 349344);
     GCF_ASSERT(resource_descriptor.supercompression_scheme == GCF_SUPERCOMPRESSION_SCHEME_NONE);
     GCF_ASSERT(resource_descriptor.type_data.image.width == 256);

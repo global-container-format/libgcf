@@ -1,10 +1,6 @@
 #include <stdio.h>
 #include <gcf/test.h>
 
-#ifndef VK_FORMAT_R8G8B8A8_UINT
-    #define VK_FORMAT_R8G8B8A8_UINT 41
-#endif /* VK_FORMAT_R8G8B8A8_UINT */
-
 int main(int argc, char **argv) {
     gcf_read_ctx ctx;
     gcf_resource_descriptor resource_descriptor;

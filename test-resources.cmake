@@ -10,6 +10,12 @@ if(GCF_ENABLE_TESTS)
             ${GCF_TEST_RESOURCE_FOLDER}/image-mipmaps-256x256-level3.bin
             ${GCF_TEST_RESOURCE_FOLDER}/image-mipmaps-256x256-level4.bin
             ${GCF_TEST_RESOURCE_FOLDER}/image-no-mipmaps-256x100-level0.bin
+        DEPENDS
+            ${GCF_TEST_RESOURCE_IMAGE_MIPMAPS_DEF}
+            ${GCF_TEST_RESOURCE_IMAGE_MIPMAPS_UNPADDED_DEF}
+            ${GCF_TEST_RESOURCE_IMAGE_COMPRESSED_ZLIB_DEF}
+            ${GCF_TEST_RESOURCE_IMAGE_UNCOMPRESSED_DEF}
+            ${GCF_TEST_RESOURCE_IMAGE_COMPRESSED_TEST_DEF}
         COMMAND ${Python_EXECUTABLE} ${GCF_TEST_RESOURCE_DEF_FOLDER}/generate-assets.py
         COMMENT "Generating test resource image data files"
     )
