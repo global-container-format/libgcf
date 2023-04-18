@@ -9,9 +9,15 @@ To build the library the following is required:
 * C compiler (preferred is clang)
 * Z-lib
 * Python (optional, required to build test resources)
-* gcfconv (optional, required to build test resources)
+* gcfpack (optional, required to build test resources)
 
 ## Preparing the build system
+
+To install dependencies:
+
+```bash
+conan install --build=missing --deploy=full_deploy -of=build -s build_type=Debug .
+```
 
 To prepare the build, run:
 
@@ -21,7 +27,7 @@ cmake --preset conan-debug -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMAND
 
 This will initialize the build system and export the compile commands (if supported).
 
-To prepare the build for testing, you may want to ensure the proper features are enabled in *features.cmake*, then eventually initialise a virtual environment and install *gcfconv*. If a virtual environment is enabled, it must be activated. These steps must be taken **before** runnig the prepare build command above, like:
+To prepare the build for testing, you may want to ensure the proper features are enabled in *features.cmake*, then eventually initialise a virtual environment and install *gcfpack*. If a virtual environment is enabled, it must be activated. These steps must be taken **before** runnig the prepare build command above, like:
 
 ```bash
 cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON
@@ -65,7 +71,7 @@ To build a shared library version of *libgcf*, define the boolean CMake variable
 To run the tests, the following is required:
 
 1. A Python 3 installation (or active virtual environment).
-2. The *gcfconv* Python package installed.
+2. The *gcfpack* Python package installed.
 
 With the environment active, initialize the build by running `cmake -S . -B build -G Ninja` in the main project directory.
 If everything is configured correctly, no warnings will be shown.
