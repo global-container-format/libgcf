@@ -5,25 +5,18 @@
     },
     "resources": [
         {
-            "type": "blob",
-            "file_path": "my-file.bin",
-            "supercompression_scheme": "deflate"
-        },
-        {
             "type": "image",
-            "format": "R8_UNORM",
-            "width": 100,
+            "format": "R8G8B8A8_UNORM",
+            "width": 256,
             "height": 100,
             "flags": [
                 "image2d"
             ],
-            "supercompression_scheme": "none",
+            "supercompression_scheme": "zlib",
             "mip_levels": [
                 {
-                    "row_stride": 10,
-                    "layers": [
-                        "only-layer.bin"
-                    ]
+                    "row_stride": 1024,
+                    "layers": [ "test-assets/image-no-mipmaps-256x100-level0.bin" ]
                 }
             ]
         }
