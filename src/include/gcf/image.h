@@ -1,5 +1,5 @@
 /*
-Copyright © 2021 Alfredo Mungo <alfredo.mungo@protonmail.ch>
+Copyright © 2021-2023 Alfredo Mungo <alfredo.mungo@protonmail.ch>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the “Software”), to deal in
