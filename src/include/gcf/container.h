@@ -220,7 +220,12 @@ typedef enum gcf_resource_type {
     /**
      * First available user-private resource ID.
      */
-    GCF_RESOURCE_TYPE_USER = 0x70000000
+    GCF_RESOURCE_TYPE_USER = 0x70000000,
+
+    /**
+     * Test resource type. DO NOT USE.
+     */
+    GCF_RESOURCE_TYPE_TEST = 0xffffffff
 } gcf_resource_type;
 
 /**
@@ -245,7 +250,12 @@ typedef enum gcf_supercompression_scheme {
     /**
      * First available user-private supercompression scheme.
      */
-    GCF_SUPERCOMPRESSION_SCHEME_USER = 0x7000
+    GCF_SUPERCOMPRESSION_SCHEME_USER = 0x7000,
+
+    /**
+     * Test supercompression scheme. DO NOT USE.
+     */
+    GCF_SUPERCOMPRESSION_SCHEME_TEST = 0xffff
 } gcf_supercompression_scheme;
 
 /**
