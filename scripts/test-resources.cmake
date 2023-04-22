@@ -1,5 +1,5 @@
 include_guard()
-include(test-defs.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/test-defs.cmake)
 
 if(GCF_ENABLE_TESTS)
     add_custom_command(
@@ -16,7 +16,7 @@ if(GCF_ENABLE_TESTS)
             ${GCF_TEST_RESOURCE_IMAGE_COMPRESSED_ZLIB_DEF}
             ${GCF_TEST_RESOURCE_IMAGE_UNCOMPRESSED_DEF}
             ${GCF_TEST_RESOURCE_IMAGE_COMPRESSED_TEST_DEF}
-        COMMAND ${Python_EXECUTABLE} ${GCF_TEST_RESOURCE_DEF_FOLDER}/generate-assets.py
+        COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/generate-assets.py
         COMMENT "Generating test resource image data files"
     )
 

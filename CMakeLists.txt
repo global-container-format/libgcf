@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.22)
 
 include(CMakePackageConfigHelpers)
 include(version.cmake)
-include(features.cmake)
-include(functions.cmake)
-include(test-defs.cmake)
+include(scripts/features.cmake)
+include(scripts/functions.cmake)
+include(scripts/test-defs.cmake)
 
 if(
     (NOT DEFINED CMAKE_BUILD_TYPE)
@@ -159,7 +159,7 @@ target_include_directories(gcf_test_utils PUBLIC ${TEST_INCLUDE_DIR})
 target_compile_definitions(gcf_test_utils PRIVATE _CRT_SECURE_NO_WARNINGS)
 
 # Create test resources
-include(test-resources.cmake)
+include(scripts/test-resources.cmake)
 
 if(GCF_ENABLE_TESTS)
     add_module_tests(core GCF_CORE_TESTS GCF_CORE_COVERAGE_FILES ${GCF_TEST_SOURCES})
