@@ -5,32 +5,36 @@ This is the reference implementation for the [GCF](https://github.com:global-con
 To build the library the following is required:
 
 * CMake
-* Build tools (ninja is preferred)
 * C compiler (preferred is clang)
-* Z-lib
-* Python (optional, required to build test resources)
-* gcfpack (optional, required to build test resources)
+* Conan
 
 ## Preparing the build system
 
-To install dependencies:
+The dependencies of this library are managed via Conan. To install these, run:
 
 ```bash
-conan install --build=missing --deploy=full_deploy -of=build -s build_type=Debug .
+conan install --build=missing --deploy=full_deploy -s build_type=Debug .
 ```
 
 To prepare the build, run:
 
 ```bash
-cmake --preset conan-debug -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON
+cmake --preset conan-debug -S . -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON
 ```
 
 This will initialize the build system and export the compile commands (if supported).
 
-To prepare the build for testing, you may want to ensure the proper features are enabled in *features.cmake*, then eventually initialise a virtual environment and install *gcfpack*. If a virtual environment is enabled, it must be activated. These steps must be taken **before** runnig the prepare build command above, like:
+To prepare the build for testing, you may want to ensure the proper features are enabled in *features.cmake*, then eventually initialise a virtual environment and install the required dependencies. If a virtual environment is enabled, it must be activated. These steps must be taken **before** runnig the prepare build command above, like:
 
 ```bash
-cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON
+
+# Install dependencies
+pipenv install -d
+
+# Activate environment
+pipenv shell
+
+# Now you can create the build system
 ```
 
 ## Running the build
@@ -45,22 +49,8 @@ The following interesting build targets are available:
 To build the library, run:
 
 ```bash
-cmake --build build
+cmake --build --preset conan-debug
 ```
-
-To run the tests:
-
-```bash
-ctest --test-dir build
-```
-
-To run the tests and generate a coverage report, run:
-
-```bash
-cmake --build build --target coverage
-```
-
-**NOTE**: The *coverage* target is only available when the corresponding feature is enabled in the `features.cmake` file.
 
 ### Building a shared library
 
@@ -68,20 +58,24 @@ To build a shared library version of *libgcf*, define the boolean CMake variable
 
 ## Testing
 
-To run the tests, the following is required:
+With the virtual environment active, initialize the build by running `cmake --preset conan-debug` in the main project directory.
 
-1. A Python 3 installation (or active virtual environment).
-2. The *gcfpack* Python package installed.
+```bash
+ctest --output-on-failure --preset conan-debug
+```
 
-With the environment active, initialize the build by running `cmake -S . -B build -G Ninja` in the main project directory.
-If everything is configured correctly, no warnings will be shown.
+To run the tests and generate a coverage report, run:
 
-With this last step successful, you can run the build and then the tests.
+```bash
+cmake --build --preset conan-debug --target coverage
+```
+
+**NOTE**: The *coverage* target is only available when the corresponding feature is enabled in the `features.cmake` file.
 
 ## Installing
 
 To install the library, run:
 
 ```bash
-cmake --install build --prefix <INSTALLATION_PREFIX_PATH>
+cmake --install YOUR_BUILD_DIR --prefix INSTALLATION_PREFIX_PATH
 ```

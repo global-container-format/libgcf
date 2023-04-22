@@ -16,7 +16,7 @@ if(GCF_ENABLE_TESTS)
             ${GCF_TEST_RESOURCE_IMAGE_COMPRESSED_ZLIB_DEF}
             ${GCF_TEST_RESOURCE_IMAGE_UNCOMPRESSED_DEF}
             ${GCF_TEST_RESOURCE_IMAGE_COMPRESSED_TEST_DEF}
-        COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/generate-assets.py
+        COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/generate-assets.py "${CMAKE_CURRENT_BINARY_DIR}"
         COMMENT "Generating test resource image data files"
     )
 

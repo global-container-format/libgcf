@@ -1,12 +1,19 @@
+"""
+    SYNOPSIS:
+        generate-assets.py BUILD_DIR
+
+    ARGUMENTS:
+        BUILD_DIR - The CMake build folder
+"""
 import os
+import sys
 
 from functools import partial
 from os import path
 from PIL import Image
 
 ASSETS_DIR = path.dirname(__file__)
-PROJECT_DIR = path.dirname(ASSETS_DIR)
-BUILD_DIR = path.join(PROJECT_DIR, "build")
+BUILD_DIR = sys.argv[1]
 BUILD_ASSET_DIR = path.join(BUILD_DIR, "test-assets")
 
 

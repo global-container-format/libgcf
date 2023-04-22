@@ -4,5 +4,6 @@ build/
 install/
 venv/
 host/
+full_deploy/
 
 CMakeUserPresets.json
