@@ -8,6 +8,8 @@ from conan.tools.files import load
 class LibGcfRecipe(ConanFile):
     name = "libgcf"
     description = "Reference C implementation for a GCF file reader."
+    url = "https://github.com/global-container-format/libgcf"
+    topics = "media", "container", "format", "gcf", "texture", "game", "engine"
     settings = "os", "compiler", "build_type", "arch"
 
     requires = (
@@ -18,6 +20,21 @@ class LibGcfRecipe(ConanFile):
         "ninja/[>=1.11.1]",
         "cmake/[>=3.22.6]"
     )
+
+    exports = "version.cmake", "LICENSE", "README.md"
+
+    exports_sources = (
+        "CMakeLists.txt",
+        "scripts/*",
+        "src/*",
+        "test/*",
+        "assets/*",
+        "Pipfile",
+        "Pipfile.lock"
+    )
+
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = {"shared": False, "fPIC": True}
 
     def set_version(self):
         cmake_version_file = load(self, path.join(self.recipe_folder, "version.cmake"))
@@ -40,6 +57,7 @@ class LibGcfRecipe(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
+        tc.variables["GCF_FEATURE_DLL"] = self.options["shared"]
         tc.generate()
 
         deps = CMakeDeps(self)
@@ -53,4 +71,18 @@ class LibGcfRecipe(ConanFile):
         cmake.configure()
         cmake.build()
         cmake.test()
-        # cmake.install()
+
+    def package(self):
+        cmake = CMake(self)
+        cmake.install()
+
+    def package_info(self):
+        self.cpp_info.libs = ["libgcf"]
+
+    def config_options(self):
+        if self.settings.os == "Windows":
+            self.options.rm_safe("fPIC")
+
+    def configure(self):
+        if not self.options.shared:
+            self.options.rm_safe("fPIC")
