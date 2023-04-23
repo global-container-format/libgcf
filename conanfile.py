@@ -10,11 +10,9 @@ class LibGcfRecipe(ConanFile):
     description = "Reference C implementation for a GCF file reader."
     url = "https://github.com/global-container-format/libgcf"
     topics = "media", "container", "format", "gcf", "texture", "game", "engine"
-    settings = "os", "compiler", "build_type", "arch"
+    settings = "os", "build_type", "arch"
 
-    requires = (
-        "zlib/1.2.13"
-    )
+    requires = "zlib/1.2.13",
 
     tool_requires = (
         "ninja/[>=1.11.1]",
@@ -25,6 +23,7 @@ class LibGcfRecipe(ConanFile):
 
     exports_sources = (
         "CMakeLists.txt",
+        "version.cmake",
         "scripts/*",
         "src/*",
         "test/*",
@@ -57,7 +56,7 @@ class LibGcfRecipe(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
-        tc.variables["BUILD_SHARED_LIBS"] = self.options["shared"]
+        tc.cache_variables["BUILD_SHARED_LIBS"] = self.options.shared
         tc.generate()
 
         deps = CMakeDeps(self)
@@ -77,7 +76,7 @@ class LibGcfRecipe(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.libs = ["libgcf"]
+        self.cpp_info.libs = ["gcf"]
 
     def config_options(self):
         if self.settings.os == "Windows":

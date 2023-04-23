@@ -16,7 +16,7 @@ endif()
 enable_testing()
 
 project(
-    GCF
+    libgcf
     VERSION ${GCF_VERSION_MAJOR}.${GCF_VERSION_MINOR}.${GCF_VERSION_PATCH}
     DESCRIPTION "Global Container Format"
     HOMEPAGE_URL https://github.com/global-container-format/libgcf

@@ -52,10 +52,6 @@ To build the library, run:
 cmake --build --preset conan-debug
 ```
 
-### Building a shared library
-
-To build a shared library version of *libgcf*, define the boolean CMake variable `GCF_BUILD_DLL` and set it to `ON`.
-
 ## Testing
 
 With the virtual environment active, initialize the build by running `cmake --preset conan-debug` in the main project directory.
