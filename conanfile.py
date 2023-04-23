@@ -57,7 +57,7 @@ class LibGcfRecipe(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
-        tc.variables["GCF_FEATURE_DLL"] = self.options["shared"]
+        tc.variables["BUILD_SHARED_LIBS"] = self.options["shared"]
         tc.generate()
 
         deps = CMakeDeps(self)

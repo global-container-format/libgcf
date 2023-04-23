@@ -105,14 +105,11 @@ file(
     ${TEST_UTILS_DIR}/*.c
 )
 
-if(GCF_FEATURE_DLL)
-    set(GCF_LIB_MODE SHARED)
+if(BUILD_SHARED_LIBS)
     set(GCF_BUILD_DLL ON)
-else()
-    set(GCF_LIB_MODE STATIC)
 endif()
 
-add_library(gcf ${GCF_LIB_MODE} ${GCF_SOURCES})
+add_library(gcf ${GCF_SOURCES})
 target_compile_definitions(gcf PRIVATE GCF_SOURCE)
 target_include_directories(
     gcf PUBLIC
