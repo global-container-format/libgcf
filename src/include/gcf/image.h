@@ -22,6 +22,10 @@ SOFTWARE.
 #ifndef GCF_IMAGE_H
 #define GCF_IMAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
 #include <stdint.h>
 #include <gcf/container.h>
 
@@ -109,5 +113,9 @@ GCFATTR gcf_result GCFAPI gcf_read_image_mip_level(
     gcf_image_mip_level_descriptor const * const restrict mip_descriptor,
     void * const out_data
 );
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 #endif /* !GCF_IMAGE_H */

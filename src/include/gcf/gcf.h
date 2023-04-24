@@ -22,8 +22,16 @@ SOFTWARE.
 #ifndef GCF_H
 #define GCF_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
 #include <gcf/container.h>
 #include <gcf/image.h>
 #include <gcf/format.h>
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 #endif /* !GCF_H */

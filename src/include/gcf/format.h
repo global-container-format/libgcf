@@ -33,6 +33,10 @@ SOFTWARE.
 #ifndef GCF_FORMAT_H
 #define GCF_FORMAT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
 enum gcf_format {
     GCF_FORMAT_UNDEFINED = 0,
     GCF_FORMAT_R4G4_UNORM_PACK8 = 1,
@@ -222,5 +226,9 @@ enum gcf_format {
     GCF_FORMAT_USER = 0x70000000,
     GCF_FORMAT_TEST = 0xffffffff
 };
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 #endif /* !GCF_FORMAT_H */

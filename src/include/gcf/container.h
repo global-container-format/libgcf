@@ -22,6 +22,10 @@ SOFTWARE.
 #ifndef GCF_CONTAINER_H
 #define GCF_CONTAINER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <gcf/version.h>
@@ -494,5 +498,9 @@ GCFATTR gcf_result GCFAPI gcf_decompress(
     uint32_t const decompressed_data_size,
     void * const out_decompressed_data
 );
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 #endif /* !GCF_CONTAINER_H */

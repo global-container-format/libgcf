@@ -22,6 +22,10 @@ SOFTWARE.
 #ifndef GCF_API_H
 #define GCF_API_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
 #include <gcf/defs.h>
 
 #ifdef GCF_BUILD_DLL
@@ -35,5 +39,9 @@ SOFTWARE.
 #endif /* GCF_BUILD_DLL */
 
 #define GCFATTR
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 #endif /* !GCF_API_H */
