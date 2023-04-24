@@ -24,7 +24,7 @@ SOFTWARE.
 
 #ifdef __cplusplus
 extern "C" {
-#endif // __cplusplus
+#endif /* __cplusplus */
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -358,8 +358,8 @@ typedef void (*gcf_free_clbk)(
  *  including an unrecognized supercompression scheme.
  */
 typedef gcf_result (*gcf_decompress_clbk)(
-    gcf_read_ctx * const restrict ctx,
-    gcf_resource_descriptor const * const restrict descriptor,
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_resource_descriptor const * const GCF_RESTRICT descriptor,
     uint32_t const compressed_data_size,
     void * const compressed_data,
     uint32_t const decompressed_data_size,
@@ -452,8 +452,8 @@ GCFATTR void GCFAPI gcf_read_context_destroy(
  *  Any other use will result in undefined behaviour.
  */
 GCFATTR gcf_result GCFAPI gcf_read_resource_descriptor(
-    gcf_read_ctx * const restrict ctx,
-    gcf_resource_descriptor * const restrict out_descriptor
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_resource_descriptor * const GCF_RESTRICT out_descriptor
 );
 
 /**
@@ -470,9 +470,9 @@ GCFATTR gcf_result GCFAPI gcf_read_resource_descriptor(
  * @note This function can only be called once per resource.
  */
 GCFATTR gcf_result GCFAPI gcf_read_resource_content(
-    gcf_read_ctx * const restrict ctx,
-    gcf_resource_descriptor const * const restrict descriptor,
-    void * const restrict out_content
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_resource_descriptor const * const GCF_RESTRICT descriptor,
+    void * const GCF_RESTRICT out_content
 );
 
 /**
@@ -491,8 +491,8 @@ GCFATTR gcf_result GCFAPI gcf_read_resource_content(
  *  an error.
  */
 GCFATTR gcf_result GCFAPI gcf_decompress(
-    gcf_read_ctx * const restrict ctx,
-    gcf_resource_descriptor const * const restrict descriptor,
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_resource_descriptor const * const GCF_RESTRICT descriptor,
     uint32_t const compressed_data_size,
     void * const compressed_data,
     uint32_t const decompressed_data_size,
@@ -501,6 +501,6 @@ GCFATTR gcf_result GCFAPI gcf_decompress(
 
 #ifdef __cplusplus
 }
-#endif // __cplusplus
+#endif /* __cplusplus */
 
 #endif /* !GCF_CONTAINER_H */

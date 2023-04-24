@@ -24,7 +24,7 @@ SOFTWARE.
 
 #ifdef __cplusplus
 extern "C" {
-#endif // __cplusplus
+#endif /* __cplusplus */
 
 #include <gcf/container.h>
 #include <gcf/image.h>
@@ -32,6 +32,6 @@ extern "C" {
 
 #ifdef __cplusplus
 }
-#endif // __cplusplus
+#endif /* __cplusplus */
 
 #endif /* !GCF_H */

@@ -85,8 +85,8 @@ GCFATTR void GCFAPI gcf_read_context_destroy(
 }
 
 GCFATTR gcf_result GCFAPI gcf_read_resource_descriptor(
-    gcf_read_ctx * const restrict ctx,
-    gcf_resource_descriptor * const restrict out_descriptor
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_resource_descriptor * const GCF_RESTRICT out_descriptor
 ) {
     if(ctx->current_resource_index >= ctx->header.resource_count) {
         return GCF_RESULT_END;
@@ -100,9 +100,9 @@ GCFATTR gcf_result GCFAPI gcf_read_resource_descriptor(
 }
 
 GCFATTR gcf_result GCFAPI gcf_read_resource_content(
-    gcf_read_ctx * const restrict ctx,
-    gcf_resource_descriptor const * const restrict descriptor,
-    void * const restrict out_content
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_resource_descriptor const * const GCF_RESTRICT descriptor,
+    void * const GCF_RESTRICT out_content
 ) {
     GCF_CHECK(read_data(ctx, descriptor->size, out_content));
 

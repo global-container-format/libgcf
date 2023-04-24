@@ -32,8 +32,17 @@ class LibGcfRecipe(ConanFile):
         "Pipfile.lock"
     )
 
-    options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = {"shared": False, "fPIC": True}
+    options = {
+        "shared": [True, False],
+        "fPIC": [True, False],
+        "enable_restrict": [True, False]
+    }
+
+    default_options = {
+        "shared": False,
+        "fPIC": True,
+        "enable_restrict": False
+    }
 
     def set_version(self):
         cmake_version_file = load(self, path.join(self.recipe_folder, "version.cmake"))
@@ -57,6 +66,7 @@ class LibGcfRecipe(ConanFile):
     def generate(self):
         tc = CMakeToolchain(self)
         tc.cache_variables["BUILD_SHARED_LIBS"] = self.options.shared
+        tc.cache_variables["GCF_FEATURE_RESTRICT"] = self.options.enable_restrict
         tc.generate()
 
         deps = CMakeDeps(self)

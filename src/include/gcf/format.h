@@ -35,7 +35,7 @@ SOFTWARE.
 
 #ifdef __cplusplus
 extern "C" {
-#endif // __cplusplus
+#endif /* __cplusplus */
 
 enum gcf_format {
     GCF_FORMAT_UNDEFINED = 0,
@@ -229,6 +229,6 @@ enum gcf_format {
 
 #ifdef __cplusplus
 }
-#endif // __cplusplus
+#endif /* __cplusplus */
 
 #endif /* !GCF_FORMAT_H */

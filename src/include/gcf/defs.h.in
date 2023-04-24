@@ -23,5 +23,6 @@ SOFTWARE.
 #define GCF_DEFS_H
 
 #cmakedefine GCF_BUILD_DLL
+#cmakedefine GCF_FEATURE_RESTRICT
 
 #endif /* !GCF_DEFS_H */

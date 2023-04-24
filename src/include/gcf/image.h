@@ -24,7 +24,7 @@ SOFTWARE.
 
 #ifdef __cplusplus
 extern "C" {
-#endif // __cplusplus
+#endif /* __cplusplus */
 
 #include <stdint.h>
 #include <gcf/container.h>
@@ -88,8 +88,8 @@ typedef struct gcf_image_mip_level_descriptor {
  * @return `GCF_RESULT_SUCCESS` on success, `GCF_RESULT_READ_ERROR` on error.
  */
 GCFATTR gcf_result GCFAPI gcf_read_image_mip_level_descriptor(
-    gcf_read_ctx * const restrict ctx,
-    gcf_resource_descriptor const * const restrict descriptor,
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_resource_descriptor const * const GCF_RESTRICT descriptor,
     gcf_image_mip_level_descriptor * const out_level_descriptor
 );
 
@@ -108,14 +108,14 @@ GCFATTR gcf_result GCFAPI gcf_read_image_mip_level_descriptor(
  *  `GCF_RESULT_DECOMPRESS_ERROR` if an error occurred during resource decompression.
  */
 GCFATTR gcf_result GCFAPI gcf_read_image_mip_level(
-    gcf_read_ctx * const restrict ctx,
-    gcf_resource_descriptor const * const restrict res_descriptor,
-    gcf_image_mip_level_descriptor const * const restrict mip_descriptor,
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_resource_descriptor const * const GCF_RESTRICT res_descriptor,
+    gcf_image_mip_level_descriptor const * const GCF_RESTRICT mip_descriptor,
     void * const out_data
 );
 
 #ifdef __cplusplus
 }
-#endif // __cplusplus
+#endif /* __cplusplus */
 
 #endif /* !GCF_IMAGE_H */

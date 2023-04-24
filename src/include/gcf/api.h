@@ -24,7 +24,7 @@ SOFTWARE.
 
 #ifdef __cplusplus
 extern "C" {
-#endif // __cplusplus
+#endif /* __cplusplus */
 
 #include <gcf/defs.h>
 
@@ -38,10 +38,16 @@ extern "C" {
     #define GCFAPI
 #endif /* GCF_BUILD_DLL */
 
+#ifdef GCF_FEATURE_RESTRICT
+    #define GCF_RESTRICT restrict
+#else
+    #define GCF_RESTRICT
+#endif /* GCF_FEATURE_RESTRICT */
+
 #define GCFATTR
 
 #ifdef __cplusplus
 }
-#endif // __cplusplus
+#endif /* __cplusplus */
 
 #endif /* !GCF_API_H */

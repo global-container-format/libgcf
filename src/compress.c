@@ -38,8 +38,8 @@ static void zlib_free(voidpf opaque, voidpf address) {
 }
 
 static gcf_result decompress_zlib_or_deflate(
-    gcf_read_ctx * const restrict ctx,
-    gcf_resource_descriptor const * const restrict descriptor,
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_resource_descriptor const * const GCF_RESTRICT descriptor,
     uint32_t const compressed_data_size,
     void * const compressed_data,
     uint32_t const decompressed_data_size,
@@ -99,8 +99,8 @@ static gcf_result decompress_identity(
 }
 
 GCFATTR gcf_result GCFAPI gcf_decompress(
-    gcf_read_ctx * const restrict ctx,
-    gcf_resource_descriptor const * const restrict descriptor,
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_resource_descriptor const * const GCF_RESTRICT descriptor,
     uint32_t const compressed_data_size,
     void * const compressed_data,
     uint32_t const decompressed_data_size,

@@ -24,9 +24,9 @@ SOFTWARE.
 #include <gcf/internal/io.h>
 
 GCFATTR gcf_result GCFAPI gcf_read_image_mip_level(
-    gcf_read_ctx * const restrict ctx,
-    gcf_resource_descriptor const * const restrict res_descriptor,
-    gcf_image_mip_level_descriptor const * const restrict mip_descriptor,
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_resource_descriptor const * const GCF_RESTRICT res_descriptor,
+    gcf_image_mip_level_descriptor const * const GCF_RESTRICT mip_descriptor,
     void * const out_data
 ) {
     void * const compressed_data = memory_alloc(ctx, mip_descriptor->compressed_size);
@@ -53,8 +53,8 @@ GCFATTR gcf_result GCFAPI gcf_read_image_mip_level(
 }
 
 GCFATTR gcf_result GCFAPI gcf_read_image_mip_level_descriptor(
-    gcf_read_ctx * const restrict ctx,
-    gcf_resource_descriptor const * const restrict descriptor,
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_resource_descriptor const * const GCF_RESTRICT descriptor,
     gcf_image_mip_level_descriptor * const out_level_descriptor
 ) {
     return read_data(
