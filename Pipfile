@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+gcfpack = {git = "https://github.com/global-container-format/gcfpack"}
 
 [dev-packages]
 conan = "*"
 pillow = "*"
-gcfpack = {git = "https://github.com/global-container-format/gcfpack"}
 
 [requires]
 python_version = "3"
