@@ -4,7 +4,7 @@
 int main(int argc, char **argv) {
     gcf_read_ctx ctx;
     gcf_resource_descriptor resource_descriptor;
-    gcf_test_init_read_context(&ctx, GCF_TEST_RESOURCE_IMAGE_MIPMAPS);
+    gcf_test_init_read_context(&ctx, GCF_TEST_RESOURCE_TEXTURE_MIPMAPS);
 
     GCF_ASSERT(ctx.header.resource_count >= 1);
 

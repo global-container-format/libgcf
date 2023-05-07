@@ -90,23 +90,23 @@ typedef enum gcf_container_flag_bits {
 } gcf_container_flag_bits;
 
 /**
- * Image type-specific data.
+ * Texture resource extended descriptor.
  */
-typedef struct gcf_image_resource_descriptor {
+typedef struct gcf_texture_extended_resource_descriptor {
     /**
-     * Width.
+     * Base mip level width.
      */
-    uint16_t width;
+    uint16_t base_width;
 
     /**
-     * Height.
+     * Base mip level height.
      */
-    uint16_t height;
+    uint16_t base_height;
 
     /**
-     * Depth.
+     * Base mip level depth.
      */
-    uint16_t depth;
+    uint16_t base_depth;
 
     /**
      * Layer count.
@@ -114,30 +114,30 @@ typedef struct gcf_image_resource_descriptor {
     uint8_t layer_count;
 
     /**
-     * Mip level count.
+     * Count of mip levels in this resource.
      */
     uint8_t mip_level_count;
 
     /**
-     * Resource-specific flags.
+     * Texture flags.
      */
     uint16_t flags;
 
     /**
-     * Reserved.
+     * Texture group.
      */
-    uint16_t rsvd1;
+    uint16_t texture_group;
 
     /**
      * Reserved.
      */
-    uint32_t rsvd2;
-} gcf_image_resource_descriptor;
+    uint32_t rsvd;
+} gcf_texture_extended_resource_descriptor;
 
 /**
  * Blob type-specific data.
  */
-typedef struct gcf_blob_resource_descriptor {
+typedef struct gcf_blob_extended_resource_descriptor {
     /**
      * Uncompressed resource size.
      */
@@ -147,25 +147,10 @@ typedef struct gcf_blob_resource_descriptor {
      * Reserved.
      */
     uint64_t rsvd;
-} gcf_blob_resource_descriptor;
+} gcf_blob_extended_resource_descriptor;
 
 /**
- * Type-specific data.
- */
-typedef union gcf_resource_descriptor_type_data {
-    /**
-     * Blob type-specific data.
-     */
-    gcf_blob_resource_descriptor blob;
-
-    /**
-     * Image type-specific data.
-     */
-    gcf_image_resource_descriptor image;
-} gcf_resource_descriptor_type_data;
-
-/**
- * Resource descriptor.
+ * Common resource descriptor.
  */
 typedef struct gcf_resource_descriptor {
     /**
@@ -186,7 +171,12 @@ typedef struct gcf_resource_descriptor {
     /**
      * Resource size, in bytes, excluding padding.
      */
-    uint32_t size;
+    uint32_t content_size;
+
+    /**
+     * Extended resource descriptor size.
+     */
+    uint16_t extension_size;
 
     /**
      * Supercompression scheme.
@@ -194,16 +184,6 @@ typedef struct gcf_resource_descriptor {
      * @see gcf_supercompression_scheme
      */
     uint16_t supercompression_scheme;
-
-    /**
-     * Reserved.
-     */
-    uint16_t rsvd;
-
-    /**
-     * Type-specific descriptor data.
-     */
-    gcf_resource_descriptor_type_data type_data;
 } gcf_resource_descriptor;
 
 /**
@@ -217,9 +197,9 @@ typedef enum gcf_resource_type {
     GCF_RESOURCE_TYPE_BLOB,
 
     /**
-     * An image resource.
+     * A texture resource.
      */
-    GCF_RESOURCE_TYPE_IMAGE,
+    GCF_RESOURCE_TYPE_TEXTURE,
 
     /**
      * First available user-private resource ID.
@@ -437,7 +417,7 @@ GCFATTR void GCFAPI gcf_read_context_destroy(
 );
 
 /**
- * Read the next resource descriptor.
+ * Read the next resource common descriptor.
  *
  * @param ctx The read context.
  * @param out_descriptor A pointer to the descriptor that will receive the data.

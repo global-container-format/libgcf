@@ -27,7 +27,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 #include <gcf/container.h>
-#include <gcf/image.h>
+#include <gcf/texture.h>
 #include <gcf/format.h>
 
 #ifdef __cplusplus

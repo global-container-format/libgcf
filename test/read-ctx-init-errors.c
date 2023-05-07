@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     result = gcf_read_context_initialize(&ctx, gcf_test_read_clbk, gcf_test_alloc_clbk, gcf_test_free_clbk, NULL, NULL);
     GCF_ASSERT(result == GCF_RESULT_INVALID_CALLBACK);
 
-    FILE * const empty_file = fopen(GCF_TEST_RESOURCE_IMAGE_MIPMAPS, "rb");
+    FILE * const empty_file = fopen(GCF_TEST_RESOURCE_TEXTURE_MIPMAPS, "rb");
     GCF_ASSERT(empty_file);
     fseek(empty_file, 0, SEEK_END);
 
@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
     GCF_ASSERT(result == GCF_RESULT_READ_ERROR);
     fclose(empty_file);
 
-    FILE * const wrong_magic_file = fopen(GCF_TEST_RESOURCE_IMAGE_MIPMAPS, "rb");
+    FILE * const wrong_magic_file = fopen(GCF_TEST_RESOURCE_TEXTURE_MIPMAPS, "rb");
     GCF_ASSERT(wrong_magic_file);
     fseek(wrong_magic_file, 1, SEEK_SET);
 

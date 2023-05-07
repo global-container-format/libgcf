@@ -1,22 +1,24 @@
 {
     "header": {
-        "version": 2,
+        "version": 3,
         "flags": []
     },
     "resources": [
         {
-            "type": "image",
+            "type": "texture",
             "format": "R8G8B8A8_UINT",
-            "width": 256,
-            "height": 100,
+            "base_width": 256,
+            "base_height": 100,
             "flags": [
-                "image2d"
+                "texture2d"
             ],
             "supercompression_scheme": "zlib",
+            "texture_group": 0,
+            "layer_count": 1,
             "mip_levels": [
                 {
                     "row_stride": 1024,
-                    "layers": [ "test-assets/image-no-mipmaps-256x100-level0.bin" ]
+                    "layers": [ "test-assets/texture-no-mipmaps-256x100-level0.bin" ]
                 }
             ]
         }

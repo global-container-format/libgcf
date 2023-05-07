@@ -104,7 +104,7 @@ GCFATTR gcf_result GCFAPI gcf_read_resource_content(
     gcf_resource_descriptor const * const GCF_RESTRICT descriptor,
     void * const GCF_RESTRICT out_content
 ) {
-    GCF_CHECK(read_data(ctx, descriptor->size, out_content));
+    GCF_CHECK(read_data(ctx, descriptor->content_size, out_content));
 
     /*
      * Skip padding.
@@ -113,8 +113,8 @@ GCFATTR gcf_result GCFAPI gcf_read_resource_content(
      * thing that can be misaligned is the actual content data.
      */
     if(~ctx->header.flags & GCF_CONTAINER_FLAG_BIT_UNPADDED) {
-        size_t const aligned_size = align_size(descriptor->size, sizeof(uint64_t));
-        size_t const padding_size = aligned_size - descriptor->size;
+        size_t const aligned_size = align_size(descriptor->content_size, sizeof(uint64_t));
+        size_t const padding_size = aligned_size - descriptor->content_size;
 
         read_data(ctx, padding_size, NULL);
     }

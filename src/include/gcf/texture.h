@@ -19,8 +19,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-#ifndef GCF_IMAGE_H
-#define GCF_IMAGE_H
+#ifndef GCF_TEXTURE_H
+#define GCF_TEXTURE_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,18 +30,18 @@ extern "C" {
 #include <gcf/container.h>
 
 /**
- * Resource descriptor flags for image resource type.
+ * Resource descriptor flags for texture resource type.
  */
-typedef enum gcf_image_flag_bits {
-    GCF_IMAGE_FLAG_BIT_1D = 0x0001,
-    GCF_IMAGE_FLAG_BIT_2D = 0x0003,
-    GCF_IMAGE_FLAG_BIT_3D = 0x0007
-} gcf_image_flag_bits;
+typedef enum gcf_texture_flag_bits {
+    GCF_TEXTURE_FLAG_BIT_1D = 0x0001,
+    GCF_TEXTURE_FLAG_BIT_2D = 0x0003,
+    GCF_TEXTURE_FLAG_BIT_3D = 0x0007
+} gcf_texture_flag_bits;
 
 /**
  * Descriptor for a single mip level.
  */
-typedef struct gcf_image_mip_level_descriptor {
+typedef struct gcf_texture_mip_level_descriptor {
     /**
      * Size of the compressed data, in bytes.
      */
@@ -58,12 +58,12 @@ typedef struct gcf_image_mip_level_descriptor {
     uint32_t row_stride;
 
     /**
-     * Depth stride for 3D images.
+     * Depth stride for 3D textures.
      */
-    uint32_t depth_stride;
+    uint32_t slice_stride;
 
     /**
-     * Layer stride for array images.
+     * Layer stride for array textures.
      */
     uint32_t layer_stride;
 
@@ -76,41 +76,41 @@ typedef struct gcf_image_mip_level_descriptor {
      * Reserved.
      */
     uint64_t rsvd2;
-} gcf_image_mip_level_descriptor;
+} gcf_texture_mip_level_descriptor;
 
 /**
- * Read an image mip level descriptor.
+ * Read an texture mip level descriptor.
  *
  * @param ctx The context.
- * @param descriptor The image resource descriptor.
+ * @param descriptor The texture resource descriptor.
  * @param out_level_descriptor The output mip map level descriptor.
  *
  * @return `GCF_RESULT_SUCCESS` on success, `GCF_RESULT_READ_ERROR` on error.
  */
-GCFATTR gcf_result GCFAPI gcf_read_image_mip_level_descriptor(
+GCFATTR gcf_result GCFAPI gcf_read_texture_mip_level_descriptor(
     gcf_read_ctx * const GCF_RESTRICT ctx,
     gcf_resource_descriptor const * const GCF_RESTRICT descriptor,
-    gcf_image_mip_level_descriptor * const out_level_descriptor
+    gcf_texture_mip_level_descriptor * const out_level_descriptor
 );
 
 /**
- * Read an image mip level.
+ * Read an texture mip level.
  *
  * @param ctx The context.
  * @param res_descriptor The resource descriptor.
  * @param mip_descriptor The mip map level descriptor.
  * @param out_data The output mip map level data buffer. This must be
- *  at least `gcf_image_mip_level_descriptor::uncompressed_size` bytes long and
+ *  at least `gcf_texture_mip_level_descriptor::uncompressed_size` bytes long and
  *  will contain the uncompressed mip map level data on success.
  *
  * @return `GCF_RESULT_SUCCESS` on success, `GCF_RESULT_READ_ERROR` if an error occurred during
  *  a read, `GCF_RESULT_MEMORY_ERROR` if an error occurred during memory allocation or
  *  `GCF_RESULT_DECOMPRESS_ERROR` if an error occurred during resource decompression.
  */
-GCFATTR gcf_result GCFAPI gcf_read_image_mip_level(
+GCFATTR gcf_result GCFAPI gcf_read_texture_mip_level(
     gcf_read_ctx * const GCF_RESTRICT ctx,
     gcf_resource_descriptor const * const GCF_RESTRICT res_descriptor,
-    gcf_image_mip_level_descriptor const * const GCF_RESTRICT mip_descriptor,
+    gcf_texture_mip_level_descriptor const * const GCF_RESTRICT mip_descriptor,
     void * const out_data
 );
 
@@ -118,4 +118,4 @@ GCFATTR gcf_result GCFAPI gcf_read_image_mip_level(
 }
 #endif /* __cplusplus */
 
-#endif /* !GCF_IMAGE_H */
+#endif /* !GCF_TEXTURE_H */

@@ -69,7 +69,7 @@ def create_folders():
 def write_image_asset_file(file_name: str, image: Image.Image):
     full_path = path.join(BUILD_ASSET_DIR, file_name)
 
-    print(f"Writing image asset data {full_path}...")
+    print(f"Writing texture asset data {full_path}...")
 
     with open(full_path, "wb") as f:
         f.write(image.tobytes())
@@ -77,8 +77,8 @@ def write_image_asset_file(file_name: str, image: Image.Image):
 
 def main():
     create_folders()
-    generate_mipmaps_test_files("image-mipmaps", 256, 256, 5)
-    generate_mipmaps_test_files("image-no-mipmaps", 256, 100, 1)
+    generate_mipmaps_test_files("texture-mipmaps", 256, 256, 5)
+    generate_mipmaps_test_files("texture-no-mipmaps", 256, 100, 1)
 
 
 if __name__ == "__main__":
