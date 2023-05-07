@@ -23,6 +23,13 @@ SOFTWARE.
 #include <gcf/internal/memory.h>
 #include <gcf/internal/io.h>
 
+GCFATTR gcf_result GCFAPI gcf_read_texture_extended_resource_descriptor(
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_texture_extended_resource_descriptor * const out_descriptor
+) {
+    return read_data(ctx, sizeof(gcf_texture_extended_resource_descriptor), out_descriptor);
+}
+
 GCFATTR gcf_result GCFAPI gcf_read_texture_mip_level(
     gcf_read_ctx * const GCF_RESTRICT ctx,
     gcf_resource_descriptor const * const GCF_RESTRICT res_descriptor,

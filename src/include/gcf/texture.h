@@ -79,7 +79,7 @@ typedef struct gcf_texture_mip_level_descriptor {
 } gcf_texture_mip_level_descriptor;
 
 /**
- * Read an texture mip level descriptor.
+ * Read a texture mip level descriptor.
  *
  * @param ctx The context.
  * @param descriptor The texture resource descriptor.
@@ -94,7 +94,7 @@ GCFATTR gcf_result GCFAPI gcf_read_texture_mip_level_descriptor(
 );
 
 /**
- * Read an texture mip level.
+ * Read a texture mip level.
  *
  * @param ctx The context.
  * @param res_descriptor The resource descriptor.
@@ -112,6 +112,20 @@ GCFATTR gcf_result GCFAPI gcf_read_texture_mip_level(
     gcf_resource_descriptor const * const GCF_RESTRICT res_descriptor,
     gcf_texture_mip_level_descriptor const * const GCF_RESTRICT mip_descriptor,
     void * const out_data
+);
+
+/**
+ * Read a texture extended resource descriptor.
+ *
+ * @param ctx The context.
+ * @param out_descriptor The output extended resource descriptor.
+ *
+ * @return `GCF_RESULT_SUCCESS` on success or `GCF_RESULT_READ_ERROR` if an error occurred during
+ *  a read.
+ */
+GCFATTR gcf_result GCFAPI gcf_read_texture_extended_resource_descriptor(
+    gcf_read_ctx * const GCF_RESTRICT ctx,
+    gcf_texture_extended_resource_descriptor * const out_descriptor
 );
 
 #ifdef __cplusplus

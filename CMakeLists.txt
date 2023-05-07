@@ -83,7 +83,7 @@ file(
     ${SRC_DIR}/reader.c
     ${SRC_DIR}/memory.c
     ${SRC_DIR}/io.c
-    ${SRC_DIR}/image.c
+    ${SRC_DIR}/texture.c
     ${SRC_DIR}/compress.c
 )
 file(
@@ -93,10 +93,10 @@ file(
     ${TEST_DIR}/*.c
 )
 file(
-    GLOB GCF_IMAGE_TEST_SOURCES
+    GLOB GCF_TEXTURE_TEST_SOURCES
     LIST_DIRECTORIES false
     RELATIVE ${PROJECT_SOURCE_DIR}
-    ${TEST_DIR}/image/*.c
+    ${TEST_DIR}/texture/*.c
 )
 file(
     GLOB_RECURSE GCF_TEST_UTILS_SOURCES
@@ -160,7 +160,7 @@ include(scripts/test-resources.cmake)
 
 if(GCF_ENABLE_TESTS)
     add_module_tests(core GCF_CORE_TESTS GCF_CORE_COVERAGE_FILES ${GCF_TEST_SOURCES})
-    add_module_tests(image GCF_COLORMAP_TESTS GCF_COLORMAP_COVERAGE_FILES ${GCF_IMAGE_TEST_SOURCES})
+    add_module_tests(texture GCF_COLORMAP_TESTS GCF_COLORMAP_COVERAGE_FILES ${GCF_TEXTURE_TEST_SOURCES})
 endif()
 
 list(APPEND GCF_TESTS ${GCF_CORE_TESTS} ${GCF_COLORMAP_TESTS})
