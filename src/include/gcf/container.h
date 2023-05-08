@@ -35,16 +35,16 @@ extern "C" {
 #define GCF_QUOTE_LITERAL(value) #value
 #define GCF_QUOTE(value) GCF_QUOTE_LITERAL(value)
 
-#if GCF_VERSION_MAJOR < 9
+#if GCF_STANDARD_VERSION < 9
     #define GCF_MAGIC_PREFIX "GC0"
 #else
     #define GCF_MAGIC_PREFIX "GC"
-#endif /* GCF_VERSION_MAJOR > 9 */
+#endif /* GCF_STANDARD_VERSION > 9 */
 
 /**
  * Magic value.
  */
-#define GCF_MAGIC_VALUE GCF_MAGIC_PREFIX GCF_QUOTE(GCF_VERSION_MAJOR)
+#define GCF_MAGIC_VALUE GCF_MAGIC_PREFIX GCF_QUOTE(GCF_STANDARD_VERSION)
 
 /**
  * Check whether a result is successful or not. Return from
