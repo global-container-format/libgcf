@@ -21,7 +21,8 @@ int main(int argc, char **argv) {
 
     GCF_ASSERT(resource_descriptor.resource_type == GCF_RESOURCE_TYPE_TEXTURE);
     GCF_ASSERT(resource_descriptor.format == GCF_FORMAT_R8G8B8A8_UINT);
-    GCF_ASSERT(resource_descriptor.content_size == 349344);
+    GCF_ASSERT(resource_descriptor.content_size == 349304);
+    GCF_ASSERT(resource_descriptor.extension_size == sizeof(gcf_texture_extended_resource_descriptor));
     GCF_ASSERT(resource_descriptor.supercompression_scheme == GCF_SUPERCOMPRESSION_SCHEME_NONE);
     GCF_ASSERT(tex_descriptor.base_width == 256);
     GCF_ASSERT(tex_descriptor.base_height == 256);

@@ -71,11 +71,6 @@ typedef struct gcf_texture_mip_level_descriptor {
      * Reserved.
      */
     uint32_t rsvd;
-
-    /**
-     * Reserved.
-     */
-    uint64_t rsvd2;
 } gcf_texture_mip_level_descriptor;
 
 /**

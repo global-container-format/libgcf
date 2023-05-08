@@ -4,6 +4,7 @@
 int main(int argc, char **argv) {
     gcf_read_ctx ctx;
     gcf_resource_descriptor resource_descriptor;
+    gcf_texture_extended_resource_descriptor tex_descriptor;
     gcf_texture_mip_level_descriptor cm_mip_level_descriptor;
     gcf_test_init_read_context(&ctx, GCF_TEST_RESOURCE_TEXTURE_COMPRESSED_ZLIB);
 
@@ -11,6 +12,10 @@ int main(int argc, char **argv) {
 
     GCF_ASSERT_RESULT(
         gcf_read_resource_descriptor(&ctx, &resource_descriptor)
+    );
+
+    GCF_ASSERT_RESULT(
+        gcf_read_texture_extended_resource_descriptor(&ctx, &tex_descriptor)
     );
 
     GCF_ASSERT_RESULT(
